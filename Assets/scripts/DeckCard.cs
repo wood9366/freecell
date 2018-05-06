@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DeckCard : MonoBehaviour {
 	public CardObject _CardObjectTemplate;
-	public Vector2 _CardObjectInitialPos = new Vector2(0, -60);
-	public float _CardObjectOffsetY = -50;
+	public Vector3 _CardObjectInitialPos = new Vector3(0, -60, -0.1f);
+	public Vector3 _CardObjectOffset = new Vector3(0, -50, -0.1f);
 	public int _NumMaxCard = 16;
 
 	public void empty() {
@@ -30,7 +30,7 @@ public class DeckCard : MonoBehaviour {
 
 		if (_Cards.Count > 0) {
 			pos = _Cards[_Cards.Count - 1].transform.localPosition;
-			pos.y += _CardObjectOffsetY;
+			pos += _CardObjectOffset;
 		} else {
 			pos = _CardObjectInitialPos;
 		}

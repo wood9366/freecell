@@ -19,7 +19,6 @@ public class CardObject : CustomMonoBehavior {
 			_SpriteType.sprite = ResourceMgr.Instance.getSpriteCardType(_card.Type);
 			_SpriteVal.color = ResourceMgr.Instance.getColorCardType(_card.Type);
 			_SpriteVal.sprite = ResourceMgr.Instance.getSpriteCardVal(_card.Val);
-
 		}
 
 		setName();
@@ -31,7 +30,7 @@ public class CardObject : CustomMonoBehavior {
 	}
 
 	void setName() {
-        name = Data.Type.ToString() + "_" + (Data.Val + 1).ToString();
+        name = Data.Type.ToString() + "_" + Data.Val.ToString();
 	}
 
 	void Awake() {
@@ -39,5 +38,14 @@ public class CardObject : CustomMonoBehavior {
 		IsEnabled = false;
 	}
 
-	Card _card = Card.Empty;
+	void OnMouseDown() {
+		Debug.LogFormat("mouse down on obj {0} card {1}", name, Data.ToString());
+	}
+
+	void OnMouseDrag() {
+		//Debug.LogFormat("drag {0}", _card.ToString());
+		//sprite.color -= Color.white * Time.deltaTime;
+	}
+
+	Card _card = new Card();
 }

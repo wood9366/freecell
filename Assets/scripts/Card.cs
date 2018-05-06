@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Card {
-	static public Card Empty = new Card(ECardType.NONE, 0);
-
 	public enum ECardType {
 		SPADE = 0,
 		HEART,
@@ -14,6 +12,10 @@ public class Card {
 		NUM,
 
 		NONE
+	}
+
+	public Card() {
+		set(ECardType.NONE, 0);
 	}
 
 	public Card(ECardType type, int val) {

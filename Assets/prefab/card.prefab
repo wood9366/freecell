@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 114540859912692890}
   - component: {fileID: 114529459261125940}
   - component: {fileID: 210619123258621124}
+  - component: {fileID: 61991667161761222}
   m_Layer: 5
   m_Name: card
   m_TagString: Untagged
@@ -64,6 +65,31 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!61 &61991667161761222
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1155617923873944}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 25, y: 25, z: 25, w: 25}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 128, y: 128}
+    newSize: {x: 170, y: 237}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 1
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 170, y: 237}
+  m_EdgeRadius: 0
 --- !u!114 &114407479818600604
 MonoBehaviour:
   m_ObjectHideFlags: 1

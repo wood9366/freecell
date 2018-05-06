@@ -69,6 +69,14 @@ public class Game : MonoBehaviour {
 				} else {
 					Debug.LogWarningFormat("fill card desk {0} with invalid id {1}", i, id);
 				}
+
+				if (cur >= num) {
+					break;
+				}
+			}
+
+			if (cur >= num) {
+				break;
 			}
 		}
 	}
