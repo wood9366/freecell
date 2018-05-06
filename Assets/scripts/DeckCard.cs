@@ -16,7 +16,7 @@ public class DeckCard : MonoBehaviour {
 		_Cards.Clear();
 	}
 
-	public void moveCardIn(Card card) {
+	public void addCard(Card card) {
 		if (_Cards.Count < _NumMaxCard) {
 			createCardObject(card);
 		} else {
@@ -25,27 +25,60 @@ public class DeckCard : MonoBehaviour {
 		}
 	}
 
-	CardObject createCardObject(Card card) {
-		Vector3 pos = Vector3.zero;
+	public bool isDragable(CardObject card) {
+		return TopCardObject == card;
+	}
 
-		if (_Cards.Count > 0) {
-			pos = _Cards[_Cards.Count - 1].transform.localPosition;
-			pos += _CardObjectOffset;
-		} else {
-			pos = _CardObjectInitialPos;
+	public void dragCardIn(CardObject cardObj) {
+		addCardObject(cardObj);
+	}
+
+	public void dragCardOut(CardObject cardObj) {
+        removeCardObject(cardObj);
+	}
+
+	void addCardObject(CardObject card) {
+		if (!_Cards.Contains(card)) {
+			card.deckCard = this;
+
+			card.transform.SetParent(transform);
+			card.transform.localScale = Vector3.one;
+			card.transform.localRotation = Quaternion.identity;
+			card.transform.localPosition = NextCardLocalPosition;
+
+			_Cards.Add(card);
 		}
+	}
 
-		var obj = GameObject.Instantiate(_CardObjectTemplate,
-			Vector3.zero, Quaternion.identity, transform);
+	Vector3 NextCardLocalPosition {
+		get {
+            if (_Cards.Count > 0) {
+                return _Cards[_Cards.Count - 1].transform.localPosition + _CardObjectOffset;
+            } else {
+                return _CardObjectInitialPos;
+            }
+		}
+	}
 
-		obj.transform.localPosition = pos;
+	void removeCardObject(CardObject card) {
+		_Cards.Remove(card);
+	}
 
-		CardObject cardObj = obj.GetComponent<CardObject>();
+	CardObject createCardObject(Card card) {
+		var cardObj = GameObject.Instantiate(_CardObjectTemplate,
+			Vector3.zero, Quaternion.identity);
+
+		addCardObject(cardObj);
+
 		cardObj.set(card);
 
-		_Cards.Add(cardObj);
-
 		return cardObj;
+	}
+
+	CardObject TopCardObject {
+		get {
+			return _Cards.Count > 0 ? _Cards[_Cards.Count - 1] : null;
+		}
 	}
 
 	List<CardObject> _Cards = new List<CardObject>();

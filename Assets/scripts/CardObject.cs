@@ -8,6 +8,25 @@ public class CardObject : CustomMonoBehavior {
 
 	public Card Data { get { return _card; } }
 
+	public DeckSwitch deckSwitch {
+		get { return _deckSwitch; }
+		set {
+			_deckSwitch = value;
+			_deckCard = null;
+		}
+	}
+
+	public DeckCard deckCard {
+		get { return _deckCard; }
+		set {
+			_deckCard = value;
+			_deckSwitch = null;
+		}
+	}
+
+	DeckSwitch _deckSwitch = null;
+	DeckCard _deckCard = null;
+
 	public void set(Card card) {
 		var isValid = card.IsValid;
 
@@ -38,13 +57,12 @@ public class CardObject : CustomMonoBehavior {
 		IsEnabled = false;
 	}
 
-	void OnMouseDown() {
-		Debug.LogFormat("mouse down on obj {0} card {1}", name, Data.ToString());
+	void OnMouseDrag() {
+		DragDeckCard.Instance.SendMessage("onDragCard", this);
 	}
 
-	void OnMouseDrag() {
-		//Debug.LogFormat("drag {0}", _card.ToString());
-		//sprite.color -= Color.white * Time.deltaTime;
+	void OnMouseUp() {
+		DragDeckCard.Instance.SendMessage("onDragCardEnd", this);
 	}
 
 	Card _card = new Card();

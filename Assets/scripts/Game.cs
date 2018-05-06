@@ -65,7 +65,7 @@ public class Game : MonoBehaviour {
 				var card = new Card(id);
 
 				if (card.IsValid) {
-					_DeckCards[i].moveCardIn(card);
+					_DeckCards[i].addCard(card);
 				} else {
 					Debug.LogWarningFormat("fill card desk {0} with invalid id {1}", i, id);
 				}
