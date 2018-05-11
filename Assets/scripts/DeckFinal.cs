@@ -2,47 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeckFinal : MonoBehaviour {
-	public CardObject _Card;
-	public Card.ECardType _CardType;
+public class DeckFinal : Deck {
+    public CardData.ECardType _CardType;
 
-	public Card TopCard {
-		get {
-			return _Card.Data;
-		}
-	}
-	
-	public bool IsEmpty {
-		get {
-			return !_Card.Data.IsValid;
-		}
-	}
+    public override int MaxNumCard { get { return 13; } }
 
-	public void empty() {
-		_Card.IsEnabled = false;
-	}
+    public override bool canPutOnCard(Card card) {
+        if (card.CardType == _CardType) {
+            if (TopCard == null) {
+                return card.CardVal == 0;
+            } else {
+                return card.CardVal == TopCard.CardVal + 1;
+            }
+        }
 
-	public void moveCardIn(Card card) {
-		if (isNextCard(card)) {
-			if (IsEmpty) {
-				_Card.IsEnabled = true;
-			}
+        return false;
+    }
 
-			_Card.set(card);
-		} else {
-			Debug.LogWarningFormat("can't move card {0} in deck final {1}",
-				card.ToString(), ToString());
-		}
-	}
-
-	override public string ToString() {
-		return string.Format("Desk Final {0} top {1}", CardType, TopCard.Val.ToString());
-	}
-
-	public bool isNextCard(Card card) {
-		return card.Type == CardType
-			&& card.Val == (TopCard.IsValid ? TopCard.Val + 1 : 1);
-	}
-
-	Card.ECardType CardType { get { return _CardType; } }
+    public override bool isDraggable(Card card) { return false; }
 }

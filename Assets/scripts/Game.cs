@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Game : MonoBehaviour {
-	public List<DeckSwitch> _DeckSwitches = new List<DeckSwitch>(4);
+	public List<Deck> _DeckSwitches = new List<Deck>(4);
 	public List<DeckFinal> _DeckFinals = new List<DeckFinal>(4);
 	public List<DeckCard> _DeckCards = new List<DeckCard>(8);
 
@@ -62,10 +62,9 @@ public class Game : MonoBehaviour {
 
 			while (numCard-- > 0) {
 				var id = cards[cur++];
-				var card = new Card(id);
 
-				if (card.IsValid) {
-					_DeckCards[i].addCard(card);
+                if (CardData.IsValidCardId(id)) {
+					_DeckCards[i].putOnCard(createCard(id), true);
 				} else {
 					Debug.LogWarningFormat("fill card desk {0} with invalid id {1}", i, id);
 				}
@@ -81,10 +80,20 @@ public class Game : MonoBehaviour {
 		}
 	}
 
+	Card createCard(int id) {
+		var obj = GameObject.Instantiate(ResourceMgr.Instance.getCardPrefab(),
+                                         Vector3.zero,
+                                         Quaternion.identity);
+
+        obj.init(id);
+
+		return obj;
+	}
+
 #if UNITY_EDITOR
 	[ContextMenu("Auto Set Deck")]
 	void autoSetDeck() {
-		setDeck<DeckSwitch>("2d/SwitchDecks", _DeckSwitches);
+		setDeck<Deck>("2d/SwitchDecks", _DeckSwitches);
 		setDeck<DeckFinal>("2d/FinalDecks", _DeckFinals);
 		setDeck<DeckCard>("2d/CardDecks", _DeckCards);
 	}

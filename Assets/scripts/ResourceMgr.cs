@@ -19,6 +19,7 @@ public class ResourceMgr : MonoBehaviour {
 	}
 
     public CardData _CardData;
+    public Card _CardPrefab;
 
     static public ResourceMgr Instance { get { return sInstance; } }
 
@@ -28,11 +29,15 @@ public class ResourceMgr : MonoBehaviour {
 		sInstance = this;
 	}
 
-	public Color getColorCardType(Card.ECardType cardType) {
+    public Card getCardPrefab() {
+        return _CardPrefab;
+    }
+
+	public Color getColorCardType(global::CardData.ECardType cardType) {
 		return _CardData._ColorTypes[(int)cardType];
 	}
 
-	public Sprite getSpriteCardType(Card.ECardType cardType) {
+	public Sprite getSpriteCardType(global::CardData.ECardType cardType) {
 		return _CardData._SpriteTypes[(int)cardType];
 	}
 

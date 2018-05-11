@@ -2,72 +2,79 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card {
-	public enum ECardType {
-		SPADE = 0,
-		HEART,
-		CLUB,
-		DIAMOND,
+public class Card : CustomMonoBehavior {
+	public SpriteRenderer _SpriteType;
+	public SpriteRenderer _SpriteVal;
 
-		NUM,
+	public void init(int id) {
+        _card = CardData.Create(id);
 
-		NONE
-	}
+		if (_card != null) {
+			_SpriteType.sprite = ResourceMgr.Instance.getSpriteCardType(_card.Type);
+			_SpriteVal.color = ResourceMgr.Instance.getColorCardType(_card.Type);
+			_SpriteVal.sprite = ResourceMgr.Instance.getSpriteCardVal(_card.Val);
 
-	public Card() {
-		set(ECardType.NONE, 0);
-	}
-
-	public Card(ECardType type, int val) {
-		set(type, val);
-	}
-
-	public Card(Card card) {
-		set(card);
-	}
-
-	// card id
-	// 0 ~ 12, spade
-	// 13 ~ 25, heard
-	// 26 ~ 38, club
-	// 39 ~ 51, diamond
-	public Card(int id) {
-		if (id >= 0 && id <= 12) {
-			set(ECardType.SPADE, id + 1);
-		} else if (id >= 13 && id <= 25) {
-			set(ECardType.HEART, id - 12);
-		} else if (id >= 26 && id <= 38) {
-			set(ECardType.CLUB, id - 25);
-		} else if (id >= 39 && id <= 51) {
-			set(ECardType.DIAMOND, id - 38);
-		} else {
-			set(ECardType.NONE, 0);
+            name = CardType.ToString() + "_" + CardVal.ToString();
 		}
 	}
 
-	public void set(Card card) {
-		set(card._type, card._val);
+    public Deck DeckOn {
+        get { return _deck; }
+        set { _deck = value; }
+    }
+
+    public bool IsDraggable {
+        get {
+            return DeckOn != null && DeckOn.isDraggable(this);
+        }
+    }
+
+    public string CardInfo { get { return _card.ToString(); } }
+
+    public CardData.ECardTypeColor CardTypeColor { get { return _card.TypeColor; } }
+    public CardData.ECardType CardType { get { return _card.Type; } }
+    public int CardVal { get { return _card.Val; } }
+
+    public bool IsTopCard { get { return _upCard == null; } }
+
+    public int NumCardOn {
+        get {
+            int num = 0;
+
+            Card cur = this;
+
+            while (cur != null) {
+                num++;
+                cur = cur.UpCard;
+            }
+
+            return num;
+        }
+    }
+
+    public Card UpCard { get { return _upCard; } }
+    public Card DownCard { get { return _downCard; } }
+
+    public void putOnCard(Card card) {
+        _upCard = card;
+        card._downCard = card;
+
+        card.transform.SetParent(transform);
+        card.transform.localScale = Vector3.one;
+        card.transform.localRotation = Quaternion.identity;
+        card.transform.localPosition = Config.Instance.CardStackOffset;
+    }
+
+	void OnMouseDrag() {
+		DeckDrag.Instance.SendMessage("onDragCard", this);
 	}
 
-	public void set(ECardType type, int val) {
-		_type = type;
-		_val = val;
+	void OnMouseUp() {
+		DeckDrag.Instance.SendMessage("onDragCardEnd", this);
 	}
 
-	public bool IsValid {
-		get {
-            return _type >= 0 && _type < ECardType.NUM
-                && _val >= 1 && _val <= 13;
-		}
-	}
-
-	public ECardType Type { get { return _type; } }
-	public int Val { get { return _val; } }
-
-	override public string ToString() {
-		return "Card " + Type.ToString() + " " + Val.ToString();
-	}
-
-	ECardType _type = ECardType.NONE;
-	int _val = 0;
+    Deck _deck = null;
+	CardData _card = null;
+    Card _upCard = null;
+    Card _downCard = null;
 }
