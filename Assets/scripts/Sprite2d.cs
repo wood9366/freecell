@@ -8,7 +8,7 @@ public class Sprite2d : CustomMonoBehavior {
 
 	void Update() {
 		#if UNITY_EDITOR
-		if (_AutoAdjustSize) {
+		if (_AutoAdjustSize && !Application.isPlaying) {
 			if (sprite.drawMode == SpriteDrawMode.Simple) {
 				trans2d.sizeDelta = new Vector2(
 					sprite.sprite.rect.width / sprite.sprite.pixelsPerUnit,

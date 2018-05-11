@@ -57,7 +57,7 @@ public class Card : CustomMonoBehavior {
 
     public void putOnCard(Card card) {
         _upCard = card;
-        card._downCard = card;
+        card._downCard = this;
 
         card.transform.SetParent(transform);
         card.transform.localScale = Vector3.one;

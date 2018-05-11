@@ -42,8 +42,8 @@ public class ResourceMgr : MonoBehaviour {
 	}
 
 	public Sprite getSpriteCardVal(int val) {
-		if (val > 0 && val <= 13) {
-			return _CardData._SpriteValues[val - 1];
+		if (val >= 0 && val <= 12) {
+			return _CardData._SpriteValues[val];
 		}
 
 		return null;

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Deck : MonoBehaviour {
+    public Vector3 _InitialPosition = new Vector3(0, -120, 0);
+
     public virtual int MaxNumCard { get { return 1; } }
     public virtual bool canPutOnCard(Card card) { return true; }
     public virtual bool isDraggable(Card card) { return isCardExist(card); }
@@ -21,7 +23,7 @@ public class Deck : MonoBehaviour {
                 card.transform.SetParent(transform);
                 card.transform.localScale = Vector3.one;
                 card.transform.localRotation = Quaternion.identity;
-                card.transform.localPosition = Vector3.one;
+                card.transform.localPosition = _InitialPosition;
             }
 
             _topCard = card;
