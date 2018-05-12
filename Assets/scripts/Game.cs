@@ -9,7 +9,7 @@ public class Game : MonoBehaviour {
 
 	void Start() {
 		gameStart();
-	}
+    }
 
 	void gameStart() {
 		foreach (var deck in _DeckSwitches) {
@@ -44,6 +44,7 @@ public class Game : MonoBehaviour {
 			cards[num - 1] = temp;
 		}
 
+
 		// fill cards into card deckes
 		int[] numCardDecks = new int[8] { 6, 7, 6, 7, 6, 7, 6, 7 };
 
@@ -64,7 +65,7 @@ public class Game : MonoBehaviour {
 				var id = cards[cur++];
 
                 if (CardData.IsValidCardId(id)) {
-					_DeckCards[i].putOnCard(createCard(id), true);
+					_DeckCards[i].addCard(createCard(id));
 				} else {
 					Debug.LogWarningFormat("fill card desk {0} with invalid id {1}", i, id);
 				}

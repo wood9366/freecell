@@ -50,7 +50,7 @@ public class DeckDrag : MonoBehaviour {
 
     void dragEnd() {
         if (_dragFromDeck != null) {
-            _dragFromDeck.putOnCard(_draggingCard);
+            _dragFromDeck.addCard(_draggingCard);
         }
 
         _draggingCard = null;

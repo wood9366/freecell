@@ -14,27 +14,31 @@ public class Deck : MonoBehaviour {
         _numCard = 0;
     }
 
-    public void putOnCard(Card card, bool force = false) {
-        if (force || (NumCard + card.NumCardOn <= MaxNumCard && canPutOnCard(card))) {
-            if (_topCard != null) {
-                _topCard.putOnCard(card);
-            } else {
-                // first card set position on deck
-                card.transform.SetParent(transform);
-                card.transform.localScale = Vector3.one;
-                card.transform.localRotation = Quaternion.identity;
-                card.transform.localPosition = _InitialPosition;
-            }
+    public void putOnCard(Card card) {
+        if (NumCard + card.NumCardOn <= MaxNumCard && canPutOnCard(card)) {
+            addCard(card);
+        }
+    }
 
-            _topCard = card;
-            _numCard = calculateNumCard();
+    public void addCard(Card card) {
+        if (_topCard != null) {
+            _topCard.putOnCard(card);
+        } else {
+            // first card set position on deck
+            card.transform.SetParent(transform, false);
+            card.transform.localScale = Vector3.one;
+            card.transform.localRotation = Quaternion.identity;
+            card.transform.localPosition = _InitialPosition;
+        }
 
-            Card cur = card;
+        _topCard = card;
+        _numCard = calculateNumCard();
 
-            while (cur != null) {
-                cur.DeckOn = this;
-                cur = cur.UpCard;
-            }
+        Card cur = card;
+
+        while (cur != null) {
+            cur.DeckOn = this;
+            cur = cur.UpCard;
         }
     }
 
