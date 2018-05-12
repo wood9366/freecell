@@ -55,14 +55,24 @@ public class Card : CustomMonoBehavior {
     public Card UpCard { get { return _upCard; } }
     public Card DownCard { get { return _downCard; } }
 
-    public void putOnCard(Card card) {
+    public void putOnCard(Card card, Vector3 offset) {
         _upCard = card;
         card._downCard = this;
 
         card.transform.SetParent(transform);
         card.transform.localScale = Vector3.one;
         card.transform.localRotation = Quaternion.identity;
-        card.transform.localPosition = Config.Instance.CardStackOffset;
+        card.transform.localPosition = offset;
+    }
+
+    public void putOnCard(Card card) {
+        putOnCard(card, Vector3.zero);
+    }
+
+    public void removeCard(Card card) {
+        if (card.DownCard == this) {
+            card._downCard = this._upCard = null;
+        }
     }
 
 	void OnMouseDrag() {

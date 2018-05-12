@@ -7,6 +7,13 @@ public class Game : MonoBehaviour {
 	public List<DeckFinal> _DeckFinals = new List<DeckFinal>(4);
 	public List<DeckCard> _DeckCards = new List<DeckCard>(8);
 
+	static public Game Instance { get { return sInstance; } }
+	static Game sInstance = null;
+
+	void Awake() {
+		sInstance = this;
+	}
+
 	void Start() {
 		gameStart();
     }

@@ -5,17 +5,6 @@ using UnityEngine;
 public class DeckCard : Deck {
     public override int MaxNumCard { get { return 13; } }
 
-    public override bool canPutOnCard(Card card) {
-        if (TopCard == null) {
-            return true;
-        }
-
-        bool isDifferentTypeColor = card.CardTypeColor != TopCard.CardTypeColor;
-        bool isCorrectValue = card.CardVal == TopCard.CardVal + 1;
-
-        return isDifferentTypeColor && isCorrectValue;
-    }
-
     public override bool isDraggable(Card card) {
         if (isCardExist(card)) {
             if (card == TopCard) {
@@ -26,9 +15,10 @@ public class DeckCard : Deck {
 
                 while (cur != null) {
                     bool isDifferentTypeColor = cur.CardTypeColor != prev.CardTypeColor;
-                    bool isStepIncreasedVal = cur.CardVal == prev.CardVal + 1;
+                    bool isStepIncreasedVal = cur.CardVal + 1 == prev.CardVal;
 
                     if (isDifferentTypeColor && isStepIncreasedVal) {
+                        prev = cur;
                         cur = cur.UpCard;
                     } else {
                         return false;
@@ -41,4 +31,17 @@ public class DeckCard : Deck {
 
         return false;
     }
+
+    protected override bool _canPutOnCard(Card card) {
+        if (TopCard == null) {
+            return true;
+        }
+
+        bool isDifferentTypeColor = card.CardTypeColor != TopCard.CardTypeColor;
+        bool isCorrectValue = card.CardVal + 1 == TopCard.CardVal;
+
+        return isDifferentTypeColor && isCorrectValue;
+    }
+
+    protected override Vector3 CardStackOffset { get { return Config.Instance.CardStackOffset; } }
 }

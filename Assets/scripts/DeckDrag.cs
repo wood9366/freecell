@@ -14,7 +14,7 @@ public class DeckDrag : MonoBehaviour {
 	void onDragCard(Card card) {
 		if (_isDragging) {
             // Debug.Log("dargging " + card.CardInfo());
-            updatePosition();
+            dragUpdate();
 		} else {
             // Debug.Log("start drag " + card.CardInfo());
 
@@ -38,7 +38,7 @@ public class DeckDrag : MonoBehaviour {
         _draggingCard = card;
         _dragFromDeck = card.DeckOn;
 
-        card.DeckOn.putOffCard(card);
+        card.DeckOn.removeCard(card);
 
 		card.transform.SetParent(transform);
 		card.transform.localPosition = new Vector3(0, 0, -0.1f);
@@ -49,22 +49,65 @@ public class DeckDrag : MonoBehaviour {
 	}
 
     void dragEnd() {
-        if (_dragFromDeck != null) {
+        _deckDragOn = null;
+
+        foreach (var deck in Game.Instance._DeckCards) {
+            if (deck.isOver(_draggingCard)) {
+                dragOverDeck(deck);
+            }
+        }
+
+        foreach (var deck in Game.Instance._DeckFinals) {
+            if (deck.isOver(_draggingCard)) {
+                dragOverDeck(deck);
+            }
+        }
+
+        foreach (var deck in Game.Instance._DeckSwitches) {
+            if (deck.isOver(_draggingCard)) {
+                dragOverDeck(deck);
+            }
+        }
+
+        if (_deckDragOn != null && _deckDragOn.canPutOnCard(_draggingCard)) {
+            _deckDragOn.addCard(_draggingCard);
+        } else if (_dragFromDeck != null) {
             _dragFromDeck.addCard(_draggingCard);
         }
 
+        _deckDragOn = null;
         _draggingCard = null;
         _dragFromDeck = null;
 
         _isDragging = false;
     }
 
+    void dragOverDeck(Deck deck) {
+        float d = Vector3.Distance(MousePosition, deck.transform.position);
+
+        if (_deckDragOn == null || d < _distanceDeckDragOn) {
+            _deckDragOn = deck;
+            _distanceDeckDragOn = d;
+        }
+    }
+
+    Deck _deckDragOn = null;
+    float _distanceDeckDragOn = 0;
+
+    void dragUpdate() {
+        updatePosition();
+    }
+
 	void updatePosition() {
-		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		Vector3 pos = MousePosition;
 		pos.z = -1;
 
 		transform.position = pos;
 	}
+
+    Vector3 MousePosition {
+        get { return Camera.main.ScreenToWorldPoint(Input.mousePosition); }
+    }
 
     Deck _dragFromDeck = null;
 	bool _isDragging = false;

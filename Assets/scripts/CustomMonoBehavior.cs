@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CustomMonoBehavior : MonoBehaviour {
-	protected SpriteRenderer sprite {
+	public SpriteRenderer sprite {
 		get {
 			if (_sprite == null) {
 				_sprite = GetComponent<SpriteRenderer>();
@@ -15,7 +15,7 @@ public class CustomMonoBehavior : MonoBehaviour {
 
 	SpriteRenderer _sprite = null;
 
-	protected RectTransform trans2d {
+	public RectTransform trans2d {
 		get {
 			if (_trans2d == null) {
 				_trans2d = GetComponent<RectTransform>();
@@ -26,4 +26,16 @@ public class CustomMonoBehavior : MonoBehaviour {
 	}
 
 	RectTransform _trans2d = null;
+
+    public Collider2D collider2d {
+        get {
+            if (_collider2d == null) {
+                _collider2d = GetComponent<Collider2D>();
+            }
+
+            return _collider2d;
+        }
+    }
+
+    Collider2D _collider2d;
 }

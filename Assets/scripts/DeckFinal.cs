@@ -7,7 +7,9 @@ public class DeckFinal : Deck {
 
     public override int MaxNumCard { get { return 13; } }
 
-    public override bool canPutOnCard(Card card) {
+    public override bool isDraggable(Card card) { return false; }
+
+    protected override bool _canPutOnCard(Card card) {
         if (card.CardType == _CardType) {
             if (TopCard == null) {
                 return card.CardVal == 0;
@@ -18,6 +20,4 @@ public class DeckFinal : Deck {
 
         return false;
     }
-
-    public override bool isDraggable(Card card) { return false; }
 }
