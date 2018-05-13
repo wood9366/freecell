@@ -33,15 +33,13 @@ public class DeckDrag : MonoBehaviour {
 	void dragBegin(Card card) {
 		_isDragging = true;
 
+        _dragOffset = transform.position - MousePosition;
+
         _draggingCard = card;
         _dragFromDeck = card.DeckOn;
 
         card.DeckOn.removeCard(card);
-
 		card.transform.SetParent(transform);
-		card.transform.localPosition = new Vector3(0, 0, -0.1f);
-		card.transform.localRotation = Quaternion.identity;
-		card.transform.localScale = Vector3.one;
 
         updatePosition();
 	}
@@ -97,7 +95,7 @@ public class DeckDrag : MonoBehaviour {
     }
 
 	void updatePosition() {
-		Vector3 pos = MousePosition;
+		Vector3 pos = MousePosition + _dragOffset;
 		pos.z = -1;
 
 		transform.position = pos;
@@ -107,6 +105,7 @@ public class DeckDrag : MonoBehaviour {
         get { return Camera.main.ScreenToWorldPoint(Input.mousePosition); }
     }
 
+    Vector3 _dragOffset = Vector3.zero;
     Deck _dragFromDeck = null;
 	bool _isDragging = false;
 	Card _draggingCard = null;
