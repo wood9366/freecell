@@ -69,10 +69,12 @@ public class Card : CustomMonoBehavior {
         putOnCard(card, Vector3.zero);
     }
 
-    public void removeCard(Card card) {
-        if (card.DownCard == this) {
-            card._downCard = this._upCard = null;
+    public void getOffCard() {
+        if (DownCard != null) {
+            DownCard._upCard = null;
         }
+
+        _downCard = null;
     }
 
     public void foreachCardUp(System.Action<Card> fn, bool includeSelf = true) {

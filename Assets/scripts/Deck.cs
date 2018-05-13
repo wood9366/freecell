@@ -55,10 +55,7 @@ public class Deck : CustomMonoBehavior {
             _topCard = card.DownCard;
             _numCard = calculateNumCard();
 
-            if (_topCard != null) {
-                _topCard.removeCard(card);
-            }
-
+            card.getOffCard();
             card.foreachCardUp(x => x.DeckOn = null);
         }
     }
