@@ -6,6 +6,13 @@ public class Card : CustomMonoBehavior {
 	public SpriteRenderer _SpriteType;
 	public SpriteRenderer _SpriteVal;
 
+    static public bool IsLinkedCard(Card down, Card up) {
+        bool isDifferentTypeColor = up.CardTypeColor != down.CardTypeColor;
+        bool isStepIncreasedVal = up.CardVal + 1 == down.CardVal;
+
+        return isDifferentTypeColor && isStepIncreasedVal;
+    }
+
 	public void init(int id) {
         _card = CardData.Create(id);
 
