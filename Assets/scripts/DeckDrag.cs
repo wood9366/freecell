@@ -11,7 +11,14 @@ public class DeckDrag : MonoBehaviour {
 		sInstance = this;
 	}
 
-	void onDragCard(Card card) {
+    void onMouseUpCard(Card card) {
+		// Debug.Log("end drag " + cardObj.Data.ToString());
+		if (_isDragging && card == _draggingCard) {
+            dragEnd();
+		}
+    }
+
+    void onMouseDragCard(Card card) {
 		if (_isDragging) {
             // Debug.Log("dargging " + card.CardInfo());
             dragUpdate();
@@ -21,14 +28,16 @@ public class DeckDrag : MonoBehaviour {
                 dragBegin(card);
 			}
         }
-	}
+    }
 
-	void onDragCardEnd(Card cardObj) {
-		// Debug.Log("end drag " + cardObj.Data.ToString());
-		if (_isDragging && cardObj == _draggingCard) {
-            dragEnd();
-		}
-	}
+    void click(Card card) {
+        foreach (Deck deck in Game.Instance._DeckFinals) {
+            if (deck.canPutOnCard(card)) {
+                deck.addCard(card);
+                break;
+            }
+        }
+    }
 
 	void dragBegin(Card card) {
 		_isDragging = true;
@@ -41,10 +50,35 @@ public class DeckDrag : MonoBehaviour {
         card.DeckOn.removeCard(card);
 		card.transform.SetParent(transform);
 
+        Vector3 pos = card.transform.localPosition;
+        pos.z = -0.1f;
+
+        card.transform.localPosition = pos;
+
         updatePosition();
 	}
 
     void dragEnd() {
+        if (!tryPutCardOnFinalDeck()) {
+            if (!tryPutCardOnDragOnDeck()) {
+                putCardOnFromDeck();
+            }
+        }
+
+        _deckDragOn = null;
+        _draggingCard = null;
+        _dragFromDeck = null;
+
+        _isDragging = false;
+    }
+
+    void putCardOnFromDeck() {
+        if (_dragFromDeck != null) {
+            _dragFromDeck.addCard(_draggingCard);
+        }
+    }
+
+    bool tryPutCardOnDragOnDeck() {
         _deckDragOn = null;
 
         foreach (var deck in Game.Instance._DeckCards) {
@@ -67,15 +101,23 @@ public class DeckDrag : MonoBehaviour {
 
         if (_deckDragOn != null && _deckDragOn.canPutOnCard(_draggingCard)) {
             _deckDragOn.addCard(_draggingCard);
-        } else if (_dragFromDeck != null) {
-            _dragFromDeck.addCard(_draggingCard);
+
+            return true;
+        } 
+
+        return false;
+    }
+
+    bool tryPutCardOnFinalDeck() {
+        foreach (Deck deck in Game.Instance._DeckFinals) {
+            if (deck.canPutOnCard(_draggingCard)) {
+                deck.addCard(_draggingCard);
+
+                return true;
+            }
         }
 
-        _deckDragOn = null;
-        _draggingCard = null;
-        _dragFromDeck = null;
-
-        _isDragging = false;
+        return false;
     }
 
     void dragOverDeck(Deck deck) {
@@ -95,8 +137,10 @@ public class DeckDrag : MonoBehaviour {
     }
 
 	void updatePosition() {
+        float z = transform.position.z;
+
 		Vector3 pos = MousePosition + _dragOffset;
-		pos.z = -1;
+        pos.z = z;
 
 		transform.position = pos;
 	}

@@ -76,11 +76,11 @@ public class Card : CustomMonoBehavior {
     }
 
 	void OnMouseDrag() {
-		DeckDrag.Instance.SendMessage("onDragCard", this);
+		DeckDrag.Instance.SendMessage("onMouseDragCard", this);
 	}
 
 	void OnMouseUp() {
-		DeckDrag.Instance.SendMessage("onDragCardEnd", this);
+		DeckDrag.Instance.SendMessage("onMouseUpCard", this);
 	}
 
     Deck _deck = null;
