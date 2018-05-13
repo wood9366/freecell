@@ -44,11 +44,48 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
             }
         }
 
+        autoMoveCardAndSwitchDeckCardToFinalDeck();
+
         _deckDragOn = null;
         _draggingCard = null;
         _dragFromDeck = null;
 
         _isDragging = false;
+    }
+
+    void autoMoveCardAndSwitchDeckCardToFinalDeck() {
+        bool isDeckChange = true;
+
+        while (isDeckChange) {
+            isDeckChange = false;
+
+            foreach (var deck in Game.Instance._DeckCards) {
+                isDeckChange = tryMoveDeckCardToFinalDeck(deck) || isDeckChange;
+            }
+
+            foreach (var deck in Game.Instance._DeckSwitches) {
+                isDeckChange = tryMoveDeckCardToFinalDeck(deck) || isDeckChange;
+            }
+        }
+    }
+
+    bool tryMoveDeckCardToFinalDeck(Deck deck) {
+        if (deck.TopCard == null) {
+            return false;
+        }
+
+        var finalDeck = findFinalDeckCardCanPutOn(deck.TopCard);
+
+        if (finalDeck != null) {
+            var card = deck.TopCard;
+
+            deck.getOffCard(card);
+            finalDeck.putOnCard(card);
+
+            return true;
+        }
+
+        return false;
     }
 
     void putCardOnFromDeck() {
@@ -88,15 +125,25 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
     }
 
     bool tryPutCardOnFinalDeck() {
-        foreach (Deck deck in Game.Instance._DeckFinals) {
-            if (deck.canPutOnCard(_draggingCard)) {
-                deck.putOnCard(_draggingCard);
+        var deck = findFinalDeckCardCanPutOn(_draggingCard);
 
-                return true;
-            }
+        if (deck != null) {
+            deck.putOnCard(_draggingCard);
+
+            return true;
         }
 
         return false;
+    }
+
+    Deck findFinalDeckCardCanPutOn(Card card) {
+        foreach (Deck deck in Game.Instance._DeckFinals) {
+            if (deck.canPutOnCard(card)) {
+                return deck;
+            }
+        }
+
+        return null;
     }
 
     void dragOverDeck(Deck deck) {
