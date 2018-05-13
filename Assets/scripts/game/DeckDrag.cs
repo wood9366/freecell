@@ -13,10 +13,8 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
     void onMouseDragCard(Card card) {
 		if (_isDragging) {
             dragUpdate();
-		} else {
-			if (card.IsDraggable) {
-                dragBegin(card);
-			}
+		} else if (card.IsDraggable) {
+            dragBegin(card);
         }
     }
 
