@@ -32,7 +32,7 @@ public class DeckCard : Deck {
         return false;
     }
 
-    protected override bool _canPutOnCard(Card card) {
+    protected override bool canPutOn(Card card) {
         if (TopCard == null) {
             return true;
         }

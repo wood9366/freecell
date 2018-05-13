@@ -9,7 +9,7 @@ public class DeckFinal : Deck {
 
     public override bool canDragCard(Card card) { return false; }
 
-    protected override bool _canPutOnCard(Card card) {
+    protected override bool canPutOn(Card card) {
         if (card.CardType == _CardType) {
             if (TopCard == null) {
                 return card.CardVal == 0;
