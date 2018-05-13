@@ -35,6 +35,10 @@ public class Card : CustomMonoBehavior {
     public CardData.ECardType CardType { get { return _card.Type; } }
     public int CardVal { get { return _card.Val; } }
 
+    Deck _deck = null;
+	CardData _card = null;
+
+    #region Card Pipe
     public bool IsTopCard { get { return _upCard == null; } }
 
     public int NumCardOn {
@@ -95,6 +99,11 @@ public class Card : CustomMonoBehavior {
         }
     }
 
+    Card _upCard = null;
+    Card _downCard = null;
+    #endregion
+
+    #region Mouse Event
 	void OnMouseDrag() {
 		DeckDrag.Instance.SendMessage("onMouseDragCard", this);
 	}
@@ -102,9 +111,5 @@ public class Card : CustomMonoBehavior {
 	void OnMouseUp() {
 		DeckDrag.Instance.SendMessage("onMouseUpCard", this);
 	}
-
-    Deck _deck = null;
-	CardData _card = null;
-    Card _upCard = null;
-    Card _downCard = null;
+    #endregion
 }
