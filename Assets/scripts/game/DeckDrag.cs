@@ -5,18 +5,15 @@ using UnityEngine;
 public class DeckDrag : MonoSingleton<DeckDrag> {
 
     void onMouseUpCard(Card card) {
-		// Debug.Log("end drag " + cardObj.Data.ToString());
-		if (_isDragging && card == _draggingCard) {
+		if (_isDragging) {
             dragEnd();
 		}
     }
 
     void onMouseDragCard(Card card) {
 		if (_isDragging) {
-            // Debug.Log("dargging " + card.CardInfo());
             dragUpdate();
 		} else {
-            // Debug.Log("start drag " + card.CardInfo());
 			if (card.IsDraggable) {
                 dragBegin(card);
 			}
