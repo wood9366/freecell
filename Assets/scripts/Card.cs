@@ -41,16 +41,10 @@ public class Card : CustomMonoBehavior {
     #region Card Pipe
     public bool IsTopCard { get { return _upCard == null; } }
 
-    public int NumCardOn {
+    public int NumCardUp {
         get {
             int num = 0;
-
-            Card cur = this;
-
-            while (cur != null) {
-                num++;
-                cur = cur.UpCard;
-            }
+            foreachCardUp(x => num++);
 
             return num;
         }

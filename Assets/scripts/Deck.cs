@@ -7,7 +7,7 @@ public class Deck : CustomMonoBehavior {
     public virtual bool isDraggable(Card card) { return isCardExist(card); }
 
     public bool canPutOnCard(Card card) {
-        return NumCard + card.NumCardOn <= MaxNumCard && _canPutOnCard(card);
+        return NumCard + card.NumCardUp <= MaxNumCard && _canPutOnCard(card);
     }
 
     protected virtual bool _canPutOnCard(Card card) { return true; }
