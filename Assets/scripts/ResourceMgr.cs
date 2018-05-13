@@ -7,7 +7,7 @@ using System.Linq;
 using UnityEditor;
 #endif
 
-public class ResourceMgr : MonoBehaviour {
+public class ResourceMgr : MonoSingleton<ResourceMgr> {
 
 	[System.Serializable]
 	public class CardData {
@@ -20,14 +20,6 @@ public class ResourceMgr : MonoBehaviour {
 
     public CardData _CardData;
     public Card _CardPrefab;
-
-    static public ResourceMgr Instance { get { return sInstance; } }
-
-	static ResourceMgr sInstance = null;
-
-	void Awake() {
-		sInstance = this;
-	}
 
     public Card getCardPrefab() {
         return _CardPrefab;

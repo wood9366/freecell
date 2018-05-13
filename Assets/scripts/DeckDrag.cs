@@ -2,14 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeckDrag : MonoBehaviour {
-
-	static public DeckDrag Instance { get { return sInstance; } }
-	static DeckDrag sInstance = null;
-
-	void Awake() {
-		sInstance = this;
-	}
+public class DeckDrag : MonoSingleton<DeckDrag> {
 
     void onMouseUpCard(Card card) {
 		// Debug.Log("end drag " + cardObj.Data.ToString());

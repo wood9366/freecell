@@ -2,17 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Game : MonoBehaviour {
+public class Game : MonoSingleton<Game> {
 	public List<Deck> _DeckSwitches = new List<Deck>(4);
 	public List<DeckFinal> _DeckFinals = new List<DeckFinal>(4);
 	public List<DeckCard> _DeckCards = new List<DeckCard>(8);
-
-	static public Game Instance { get { return sInstance; } }
-	static Game sInstance = null;
-
-	void Awake() {
-		sInstance = this;
-	}
 
 	void Start() {
 		gameStart();
