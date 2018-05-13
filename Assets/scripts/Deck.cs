@@ -14,14 +14,10 @@ public class Deck : CustomMonoBehavior {
 
     public bool isOver(Card card) {
         if (TopCard != null) {
-            return getRect(card.collider2d).Overlaps(getRect(TopCard.collider2d));
+            return ColliderUtility.IsColliderOverlap(card.collider2d, TopCard.collider2d);
         } else {
-            return getRect(card.collider2d).Overlaps(getRect(collider2d));
+            return ColliderUtility.IsColliderOverlap(card.collider2d, collider2d);
         }
-    }
-
-    Rect getRect(Collider2D c) {
-        return new Rect(c.bounds.min.x, c.bounds.min.y, c.bounds.size.x, c.bounds.size.y);
     }
 
     public void empty() {
