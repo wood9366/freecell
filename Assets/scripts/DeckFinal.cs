@@ -7,7 +7,7 @@ public class DeckFinal : Deck {
 
     public override int MaxNumCard { get { return 13; } }
 
-    public override bool canDragCard(Card card) { return false; }
+    public override bool canGetOffCard(Card card) { return false; }
 
     protected override bool canPutOn(Card card) {
         if (card.CardType == _CardType) {

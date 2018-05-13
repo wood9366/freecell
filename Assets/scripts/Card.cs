@@ -25,7 +25,7 @@ public class Card : CustomMonoBehavior {
 
     public bool IsDraggable {
         get {
-            return DeckOn != null && DeckOn.canDragCard(this);
+            return DeckOn != null && DeckOn.canGetOffCard(this);
         }
     }
 

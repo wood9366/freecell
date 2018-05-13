@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Deck : CustomMonoBehavior {
     public virtual int MaxNumCard { get { return 1; } }
-    public virtual bool canDragCard(Card card) { return isCardExist(card); }
+
+    public virtual bool canGetOffCard(Card card) { return isCardExist(card); }
 
     public bool canPutOnCard(Card card) {
         return hasEnoughSpacePutOn(card) && canPutOn(card);
