@@ -11,6 +11,7 @@ public class Deck : CustomMonoBehavior {
     }
 
     protected virtual bool _canPutOnCard(Card card) { return true; }
+    protected virtual Vector3 CardStackOffset { get { return Vector3.zero; } }
 
     public bool isOver(Card card) {
         if (TopCard != null) {
@@ -21,19 +22,19 @@ public class Deck : CustomMonoBehavior {
     }
 
     public void empty() {
-        if (_topCard != null) {
-            _topCard.foreachCardDown(x => GameObject.DestroyImmediate(x.gameObject));
+        if (TopCard != null) {
+            TopCard.foreachCardDown(x => GameObject.DestroyImmediate(x.gameObject));
         }
 
-        _topCard = null;
-        _numCard = 0;
+        changeTopCard(null, true);
     }
 
-    protected virtual Vector3 CardStackOffset { get { return Vector3.zero; } }
+    public Card TopCard { get { return _topCard; } }
+    public int NumCard { get { return _numCard; } }
 
     public void addCard(Card card) {
-        if (_topCard != null) {
-            _topCard.putOnCard(card, CardStackOffset);
+        if (TopCard != null) {
+            TopCard.putOnCard(card, CardStackOffset);
         } else {
             // first card set position on deck
             card.transform.SetParent(transform, false);
@@ -44,34 +45,33 @@ public class Deck : CustomMonoBehavior {
 
         card.foreachCardUp(x => {
             x.DeckOn = this;
-            if (x.UpCard == null) _topCard = x;
+            if (x.UpCard == null) changeTopCard(x);
         });
-
-        _numCard = calculateNumCard();
     }
 
     public void removeCard(Card card) {
         if (isCardExist(card)) {
-            _topCard = card.DownCard;
-            _numCard = calculateNumCard();
+            changeTopCard(card.DownCard);
 
             card.getOffCard();
             card.foreachCardUp(x => x.DeckOn = null);
         }
     }
 
-    public Card TopCard { get { return _topCard; } }
+    void changeTopCard(Card top, bool force = false) {
+        if (force || top != _topCard) {
+            _topCard = top;
 
-    int NumCard { get { return _numCard; } }
+            calculateNumCard();
+        }
+    }
 
-    int calculateNumCard() {
-        int num = 0;
+    void calculateNumCard() {
+        _numCard = 0;
 
         if (TopCard != null) {
-            TopCard.foreachCardDown(x => num++);
+            TopCard.foreachCardDown(x => _numCard++);
         }
-
-        return num;
     }
 
     protected bool isCardExist(Card card) {
