@@ -21,6 +21,9 @@ public class GameObjectUtility {
 		void OnGUI() {
 			GUILayout.BeginVertical();
 
+			_nameCreatePrefix = EditorGUILayout.TextField("Name Prefix: ",
+                                                          _nameCreatePrefix);
+
 			_numCreate = EditorGUILayout.IntField("Number of Create: ", _numCreate);
 
 			if (GUILayout.Button("Create")) {
@@ -36,7 +39,7 @@ public class GameObjectUtility {
                 for (int i = 0; i < _numCreate; i++) {
                     var go = GameObject.Instantiate(_templateGameObject) as GameObject;
 
-                    go.name = i.ToString();
+                    go.name = _nameCreatePrefix + "_" + i.ToString();
 
 					UnityEditor.GameObjectUtility.SetParentAndAlign(
 						go, _templateGameObject.transform.parent.gameObject);
@@ -47,6 +50,7 @@ public class GameObjectUtility {
         }
 
 		int _numCreate = 1;
+		string _nameCreatePrefix = "";
 	}
 
 	[MenuItem("GameObject/Custom/Create", false, 10)]
