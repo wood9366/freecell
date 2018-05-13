@@ -21,6 +21,10 @@ public class Deck : CustomMonoBehavior {
     }
 
     public void empty() {
+        if (_topCard != null) {
+            _topCard.foreachCardDown(x => GameObject.DestroyImmediate(x.gameObject));
+        }
+
         _topCard = null;
         _numCard = 0;
     }
@@ -38,18 +42,10 @@ public class Deck : CustomMonoBehavior {
             card.transform.localPosition = new Vector3(0, 0, -0.1f);
         }
 
-        Card cur = card;
-
-        while (true) {
-            cur.DeckOn = this;
-
-            if (cur.UpCard == null) {
-                _topCard = cur;
-                break;
-            }
-
-            cur = cur.UpCard;
-        }
+        card.foreachCardUp(x => {
+            x.DeckOn = this;
+            if (x.UpCard == null) _topCard = x;
+        });
 
         _numCard = calculateNumCard();
     }
@@ -63,12 +59,7 @@ public class Deck : CustomMonoBehavior {
                 _topCard.removeCard(card);
             }
 
-            Card cur = card;
-
-            while (cur != null) {
-                cur.DeckOn = null;
-                cur = cur.UpCard;
-            }
+            card.foreachCardUp(x => x.DeckOn = null);
         }
     }
 
@@ -79,11 +70,8 @@ public class Deck : CustomMonoBehavior {
     int calculateNumCard() {
         int num = 0;
 
-        var cur = TopCard;
-
-        while (cur != null) {
-            num++;
-            cur = cur.DownCard;
+        if (TopCard != null) {
+            TopCard.foreachCardDown(x => num++);
         }
 
         return num;

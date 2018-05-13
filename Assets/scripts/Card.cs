@@ -75,6 +75,24 @@ public class Card : CustomMonoBehavior {
         }
     }
 
+    public void foreachCardUp(System.Action<Card> fn, bool includeSelf = true) {
+        var cur = includeSelf ? this : UpCard;
+
+        while (cur != null) {
+            fn(cur);
+            cur = cur.UpCard;
+        }
+    }
+
+    public void foreachCardDown(System.Action<Card> fn, bool includeSelf = true) {
+        var cur = includeSelf ? this : DownCard;
+
+        while (cur != null) {
+            fn(cur);
+            cur = cur.DownCard;
+        }
+    }
+
 	void OnMouseDrag() {
 		DeckDrag.Instance.SendMessage("onMouseDragCard", this);
 	}
