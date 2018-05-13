@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Deck : CustomMonoBehavior {
     public virtual int MaxNumCard { get { return 1; } }
-    public virtual bool isDraggable(Card card) { return isCardExist(card); }
+    public virtual bool canDragCard(Card card) { return isCardExist(card); }
 
     public bool canPutOnCard(Card card) {
         return NumCard + card.NumCardUp <= MaxNumCard && _canPutOnCard(card);
     }
 
     protected virtual bool _canPutOnCard(Card card) { return true; }
-    protected virtual Vector3 CardStackOffset { get { return Vector3.zero; } }
 
     public bool isOver(Card card) {
         if (TopCard != null) {
@@ -48,6 +47,8 @@ public class Deck : CustomMonoBehavior {
             if (x.UpCard == null) changeTopCard(x);
         });
     }
+
+    protected virtual Vector3 CardStackOffset { get { return Vector3.zero; } }
 
     public void removeCard(Card card) {
         if (isCardExist(card)) {

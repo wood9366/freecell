@@ -5,7 +5,7 @@ using UnityEngine;
 public class DeckCard : Deck {
     public override int MaxNumCard { get { return 13; } }
 
-    public override bool isDraggable(Card card) {
+    public override bool canDragCard(Card card) {
         if (isCardExist(card)) {
             if (card == TopCard) {
                 return true;
