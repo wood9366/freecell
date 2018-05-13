@@ -51,7 +51,6 @@ public class Game : MonoBehaviour {
 			cards[num - 1] = temp;
 		}
 
-
 		// fill cards into card deckes
 		int[] numCardDecks = new int[8] { 6, 7, 6, 7, 6, 7, 6, 7 };
 

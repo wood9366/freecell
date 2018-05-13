@@ -17,7 +17,6 @@ public class DeckDrag : MonoBehaviour {
             dragUpdate();
 		} else {
             // Debug.Log("start drag " + card.CardInfo());
-
 			if (card.IsDraggable) {
                 dragBegin(card);
 			}
@@ -26,7 +25,6 @@ public class DeckDrag : MonoBehaviour {
 
 	void onDragCardEnd(Card cardObj) {
 		// Debug.Log("end drag " + cardObj.Data.ToString());
-
 		if (_isDragging && cardObj == _draggingCard) {
             dragEnd();
 		}
