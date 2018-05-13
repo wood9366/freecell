@@ -35,7 +35,7 @@ public class Deck : CustomMonoBehavior {
     public Card TopCard { get { return _topCard; } }
     public int NumCard { get { return _numCard; } }
 
-    public void addCard(Card card) {
+    public void putOnCard(Card card) {
         if (TopCard != null) {
             TopCard.putOnCard(card, CardStackOffset);
         } else {
@@ -54,7 +54,7 @@ public class Deck : CustomMonoBehavior {
 
     protected virtual Vector3 CardStackOffset { get { return Vector3.zero; } }
 
-    public void removeCard(Card card) {
+    public void getOffCard(Card card) {
         if (isCardExist(card)) {
             changeTopCard(card.DownCard);
 

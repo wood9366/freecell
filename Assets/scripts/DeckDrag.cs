@@ -38,7 +38,7 @@ public class DeckDrag : MonoBehaviour {
         _draggingCard = card;
         _dragFromDeck = card.DeckOn;
 
-        card.DeckOn.removeCard(card);
+        card.DeckOn.getOffCard(card);
 		card.transform.SetParent(transform);
 
         Vector3 pos = card.transform.localPosition;
@@ -65,7 +65,7 @@ public class DeckDrag : MonoBehaviour {
 
     void putCardOnFromDeck() {
         if (_dragFromDeck != null) {
-            _dragFromDeck.addCard(_draggingCard);
+            _dragFromDeck.putOnCard(_draggingCard);
         }
     }
 
@@ -91,7 +91,7 @@ public class DeckDrag : MonoBehaviour {
         }
 
         if (_deckDragOn != null && _deckDragOn.canPutOnCard(_draggingCard)) {
-            _deckDragOn.addCard(_draggingCard);
+            _deckDragOn.putOnCard(_draggingCard);
 
             return true;
         } 
@@ -102,7 +102,7 @@ public class DeckDrag : MonoBehaviour {
     bool tryPutCardOnFinalDeck() {
         foreach (Deck deck in Game.Instance._DeckFinals) {
             if (deck.canPutOnCard(_draggingCard)) {
-                deck.addCard(_draggingCard);
+                deck.putOnCard(_draggingCard);
 
                 return true;
             }
