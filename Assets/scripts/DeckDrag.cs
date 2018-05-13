@@ -30,15 +30,6 @@ public class DeckDrag : MonoBehaviour {
         }
     }
 
-    void click(Card card) {
-        foreach (Deck deck in Game.Instance._DeckFinals) {
-            if (deck.canPutOnCard(card)) {
-                deck.addCard(card);
-                break;
-            }
-        }
-    }
-
 	void dragBegin(Card card) {
 		_isDragging = true;
 
