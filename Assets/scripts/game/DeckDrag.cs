@@ -69,7 +69,7 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
         _isDragging = false;
     }
 
-    void autoMoveCardAndSwitchDeckCardToFinalDeck() {
+    public void autoMoveCardAndSwitchDeckCardToFinalDeck() {
         prepareForAutoMoveCardToFinalDeck();
 
         bool isDeckChange = true;

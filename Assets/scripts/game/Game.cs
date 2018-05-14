@@ -32,14 +32,6 @@ public class Game : MonoSingleton<Game> {
 
     void Update() {
         checkStatusChange();
-        
-        if (_status == EStatus.PREPARE) {
-            changeStatus(EStatus.DEAL);
-        } else if (_status == EStatus.DEAL) {
-            if (checkStatusEndByTime()) {
-                changeStatus(EStatus.GAME);
-            }
-        }
     }
 
     bool checkStatusEndByTime() {
@@ -59,7 +51,7 @@ public class Game : MonoSingleton<Game> {
             } else if (_status == EStatus.DEAL) {
                 enterStatusDeal();
             } else if (_status == EStatus.GAME) {
-                enableBtnShuffle();
+                enterStatusGame();
             }
         }
     }
@@ -78,14 +70,8 @@ public class Game : MonoSingleton<Game> {
     void enterStatusPrepare() {
         gamePrepare();
         disableBtnShuffle();
-    }
 
-    void enableBtnShuffle() {
-        _BtnShuffle.GetComponent<Collider2D>().enabled = true;
-    }
-
-    void disableBtnShuffle() {
-        _BtnShuffle.GetComponent<Collider2D>().enabled = false;
+        changeStatus(EStatus.DEAL);
     }
 
     void enterStatusDeal() {
@@ -99,14 +85,27 @@ public class Game : MonoSingleton<Game> {
             Vector3 pos = card.transform.position;
 
             card.fly(_SendDeck.transform.position, pos,
-                     () => card.transform.position = pos,
+                     () => {
+                         card.transform.position = pos;
+                         _numDealFlyCard--;
+
+                         if (_numDealFlyCard == 0) {
+                             changeStatus(EStatus.GAME);
+                         }
+                     },
                      delay, z);
 
+            _numDealFlyCard++;
             z += -0.1f;
             delay += Config.Instance.DealCardInterval;
         }
+    }
 
-        _statusTime = (_cards.Count - 1) * Config.Instance.DealCardInterval + 2.0f;
+    int _numDealFlyCard = 0;
+
+    void enterStatusGame() {
+        enableBtnShuffle();
+        DeckDrag.Instance.autoMoveCardAndSwitchDeckCardToFinalDeck();
     }
 
     public EStatus Status { get { return _status; } }
@@ -114,6 +113,14 @@ public class Game : MonoSingleton<Game> {
     EStatus _status = EStatus.NONE;
     EStatus _nextStatus = EStatus.NONE;
     float _statusTime = 0;
+
+    void enableBtnShuffle() {
+        _BtnShuffle.GetComponent<Collider2D>().enabled = true;
+    }
+
+    void disableBtnShuffle() {
+        _BtnShuffle.GetComponent<Collider2D>().enabled = false;
+    }
 
     void gamePrepare() {
         createCards();
