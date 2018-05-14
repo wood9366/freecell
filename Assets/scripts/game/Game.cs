@@ -180,21 +180,13 @@ public class Game : MonoSingleton<Game> {
 			numCardDecks[numCardDecks.Length - 1] = temp;
 		}
 
-		int cur = 0;
+		int idxCard = 0;
 
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 8 && idxCard < _cards.Count; i++) {
 			int numCard = numCardDecks[i];
 
-			while (numCard-- > 0) {
-                _DeckCards[i].putOnCard(_cards[cur++]);
-
-                if (cur >= _cards.Count) {
-					break;
-				}
-			}
-
-			if (cur >= _cards.Count) {
-				break;
+			while (numCard-- > 0 && idxCard < _cards.Count) {
+                _DeckCards[i].putOnCard(_cards[idxCard++]);
 			}
 		}
     }
