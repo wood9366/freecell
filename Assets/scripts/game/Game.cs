@@ -21,20 +21,20 @@ public class Game : MonoSingleton<Game> {
             _status = EStatus.DEAL;
         } else if (_status == EStatus.DEAL) {
             if (_statusTime == 0) {
-                float delay = 0.0f;
+                float delay = 1.0f;
 
                 foreach (var card in _cards) {
                     iTween.MoveFrom(card.gameObject,
                                     iTween.Hash("delay", delay,
                                                 "position", _SendDeck.transform.position,
-                                                "time", 1.0f));
-                    delay += 0.1f;
+                                                "speed", Config.Instance.CardFlySpeed));
+                    delay += Config.Instance.DealCardInterval;
                 }
             }
 
             _statusTime += Time.deltaTime;
 
-            if (_statusTime >= _cards.Count * 0.1f + 0.5f) {
+            if (_statusTime >= (_cards.Count - 1) * Config.Instance.DealCardInterval + 2.0f) {
                 _statusTime = 0;
                 _status = EStatus.GAME;
             }

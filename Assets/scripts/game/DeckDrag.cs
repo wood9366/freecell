@@ -43,7 +43,7 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
             x.transform.localScale = Vector3.one;
             x.transform.localRotation = Quaternion.identity;
             x.trans2d.anchoredPosition3D =
-                new Vector3(0, 0, -0.1f) + Config.Instance.CardStackOffset * n++;
+                Config.Instance.CardStackInitial + Config.Instance.CardStackOffset * n++;
         });
 
         updatePosition();
