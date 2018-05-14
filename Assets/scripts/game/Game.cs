@@ -75,33 +75,8 @@ public class Game : MonoSingleton<Game> {
     }
 
     void enterStatusDeal() {
-        fillCardDeckes();
-
-        // deal cards
-        float delay = 0.5f;
-        float z = 0;
-
-        foreach (var card in _cards) {
-            Vector3 pos = card.transform.position;
-
-            card.fly(_SendDeck.transform.position, pos,
-                     () => {
-                         card.transform.position = pos;
-                         _numDealFlyCard--;
-
-                         if (_numDealFlyCard == 0) {
-                             changeStatus(EStatus.GAME);
-                         }
-                     },
-                     delay, z);
-
-            _numDealFlyCard++;
-            z += -0.1f;
-            delay += Config.Instance.DealCardInterval;
-        }
+        dealCardToCardDeckes();
     }
-
-    int _numDealFlyCard = 0;
 
     void enterStatusGame() {
         enableBtnShuffle();
@@ -169,7 +144,7 @@ public class Game : MonoSingleton<Game> {
 		}
     }
 
-    void fillCardDeckes() {
+    void dealCardToCardDeckes() {
 		int[] numCardDecks = new int[8] { 6, 7, 6, 7, 6, 7, 6, 7 };
 
 		for (int i = 0; i < 4; i++) {
@@ -180,13 +155,34 @@ public class Game : MonoSingleton<Game> {
 			numCardDecks[numCardDecks.Length - 1] = temp;
 		}
 
+        float delayFlyCard = 0.5f;
+        float zOffsetFlyCard = 0;
+        int numFlyCard = 0;
 		int idxCard = 0;
 
 		for (int i = 0; i < 8 && idxCard < _cards.Count; i++) {
 			int numCard = numCardDecks[i];
 
 			while (numCard-- > 0 && idxCard < _cards.Count) {
-                _DeckCards[i].putOnCard(_cards[idxCard++]);
+                Card card = _cards[idxCard++];
+
+                _DeckCards[i].putOnCard(card);
+
+                Vector3 pos = card.transform.position;
+
+                card.fly(_SendDeck.transform.position, pos,
+                        () => {
+                            card.transform.position = pos;
+
+                            if (--numFlyCard == 0) {
+                                changeStatus(EStatus.GAME);
+                            }
+                        },
+                        delayFlyCard, zOffsetFlyCard);
+
+                numFlyCard++;
+                zOffsetFlyCard += -0.1f;
+                delayFlyCard += Config.Instance.DealCardInterval;
 			}
 		}
     }
