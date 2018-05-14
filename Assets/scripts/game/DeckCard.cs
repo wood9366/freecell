@@ -24,15 +24,33 @@ public class DeckCard : Deck {
             }
         }
 
-        return numLinkedCard <= NumMoveLinkedCard;
+        return numLinkedCard <= NumGetOffLinkedCard;
     }
 
-    int NumMoveLinkedCard {
-        get { return Game.Instance.NumEmptyCardDeck + Game.Instance.NumEmptySwitchDeck + 1; }
+    int NumGetOffLinkedCard {
+        get {
+            return (Game.Instance.NumEmptyCardDeck + 1)
+                * (Game.Instance.NumEmptySwitchDeck + 1);
+        }
+    }
+
+    int NumPutOnLinkedCard {
+        get {
+            int num = NumGetOffLinkedCard;
+
+            if (TopCard == null) {
+                num -= (Game.Instance.NumEmptySwitchDeck + 1);
+            }
+
+            return num;
+        }
     }
 
     protected override bool canPutOn(Card card) {
-        return TopCard == null || Card.IsLinkedCard(TopCard, card);
+        bool isPutOnRuleOK = TopCard == null || Card.IsLinkedCard(TopCard, card);
+        bool isNumPutOnLinkedCardOK = card.NumCardUp <= NumPutOnLinkedCard;
+
+        return isPutOnRuleOK && isNumPutOnLinkedCardOK;
     }
 
     protected override Vector3 CardStackOffset { get { return Config.Instance.CardStackOffset; } }
