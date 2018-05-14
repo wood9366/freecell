@@ -12,9 +12,11 @@ public class DeckCard : Deck {
 
         Card down = card;
         Card up = card.UpCard;
+        int numLinkedCard = 1;
 
         while (up != null) {
             if (Card.IsLinkedCard(down, up)) {
+                numLinkedCard++;
                 down = up;
                 up = up.UpCard;
             } else {
@@ -22,7 +24,11 @@ public class DeckCard : Deck {
             }
         }
 
-        return true;
+        return numLinkedCard <= NumMoveLinkedCard;
+    }
+
+    int NumMoveLinkedCard {
+        get { return Game.Instance.NumEmptyCardDeck + Game.Instance.NumEmptySwitchDeck + 1; }
     }
 
     protected override bool canPutOn(Card card) {

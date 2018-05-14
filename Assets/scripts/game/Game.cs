@@ -17,6 +17,24 @@ public class Game : MonoSingleton<Game> {
         GAME
     }
 
+    public int NumEmptySwitchDeck {
+        get {
+            int num = 0;
+            _DeckSwitches.ForEach(x => { if (x.TopCard == null) num++; });
+
+            return num;
+        }
+    }
+
+    public int NumEmptyCardDeck {
+        get {
+            int num = 0;
+            _DeckCards.ForEach(x => { if (x.TopCard == null) num++; });
+
+            return num;
+        }
+    }
+
     protected override void init() {
         if (_BtnShuffle != null) {
             MonoEventListener.Get(_BtnShuffle).OnMouseClick = onClickBtnShuffle;
