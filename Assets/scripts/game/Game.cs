@@ -7,18 +7,33 @@ public class Game : MonoSingleton<Game> {
 	public List<Deck> _DeckSwitches = new List<Deck>(4);
 	public List<DeckFinal> _DeckFinals = new List<DeckFinal>(4);
 	public List<DeckCard> _DeckCards = new List<DeckCard>(8);
+    public GameObject _BtnShuffle;
 
     public enum EStatus {
-        INIT = 0,
+        NONE = 0,
+        READY,
+        PREPARE,
         DEAL,
         GAME
+    }
+
+    protected override void init() {
+        if (_BtnShuffle != null) {
+            MonoEventListener.Get(_BtnShuffle).OnMouseClick = onClickBtnShuffle;
+        }
+
+        changeStatus(EStatus.READY);
+    }
+
+    void onClickBtnShuffle() {
+        reset();
+        changeStatus(EStatus.PREPARE);
     }
 
     void Update() {
         checkStatusChange();
         
-        if (_status == EStatus.INIT) {
-            gameInit();
+        if (_status == EStatus.PREPARE) {
             changeStatus(EStatus.DEAL);
         } else if (_status == EStatus.DEAL) {
             if (checkStatusEndByTime()) {
@@ -37,8 +52,14 @@ public class Game : MonoSingleton<Game> {
         if (_nextStatus != _status) {
             _status = _nextStatus;
 
-            if (_status == EStatus.DEAL) {
+            if (_status == EStatus.READY) {
+                enterStatusReady();
+            } else if (_status == EStatus.PREPARE) {
+                enterStatusPrepare();
+            } else if (_status == EStatus.DEAL) {
                 enterStatusDeal();
+            } else if (_status == EStatus.GAME) {
+                enableBtnShuffle();
             }
         }
     }
@@ -49,9 +70,29 @@ public class Game : MonoSingleton<Game> {
         }
     }
 
+    void enterStatusReady() {
+        reset();
+        enableBtnShuffle();
+    }
+
+    void enterStatusPrepare() {
+        gamePrepare();
+        disableBtnShuffle();
+    }
+
+    void enableBtnShuffle() {
+        _BtnShuffle.GetComponent<Collider2D>().enabled = true;
+    }
+
+    void disableBtnShuffle() {
+        _BtnShuffle.GetComponent<Collider2D>().enabled = false;
+    }
+
     void enterStatusDeal() {
+        fillCardDeckes();
+
         // deal cards
-        float delay = 1.0f;
+        float delay = 0.5f;
         float z = 0;
 
         foreach (var card in _cards) {
@@ -70,15 +111,13 @@ public class Game : MonoSingleton<Game> {
 
     public EStatus Status { get { return _status; } }
 
-    EStatus _status = EStatus.INIT;
-    EStatus _nextStatus = EStatus.INIT;
+    EStatus _status = EStatus.NONE;
+    EStatus _nextStatus = EStatus.NONE;
     float _statusTime = 0;
 
-    void gameInit() {
-        reset();
+    void gamePrepare() {
         createCards();
         shuffleCards();
-        fillCardDeckes();
     }
 
     void reset() {
@@ -154,9 +193,8 @@ public class Game : MonoSingleton<Game> {
     }
 
     Card createCard(int id) {
-		var card = GameObject.Instantiate(ResourceMgr.Instance.getCardPrefab(),
-                                         Vector3.zero,
-                                         Quaternion.identity);
+        var card = GameObject.Instantiate(ResourceMgr.Instance.getCardPrefab(),
+                                          _SendDeck.transform, false);
 
         card.init(id);
 

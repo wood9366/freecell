@@ -33,7 +33,8 @@ public class Card : CustomMonoBehavior {
             return;
         }
 
-        to.z = from.z = -2.0f + zoffset; // -2 if card fly layer
+        to.z = from.z = Game.Instance._SendDeck.transform.position.z
+            + zoffset;
 
         _flyCompleteListeners = listener;
 
