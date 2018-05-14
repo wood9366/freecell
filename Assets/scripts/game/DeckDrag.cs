@@ -5,7 +5,7 @@ using UnityEngine;
 public class DeckDrag : MonoSingleton<DeckDrag> {
 
     void onMouseUpCard(Card card) {
-        if (Game.Instance.Status != Game.EStatus.GAME) {
+        if (IsIgnoreCardDrag) {
             return;
         }
 
@@ -15,7 +15,7 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
     }
 
     void onMouseDragCard(Card card) {
-        if (Game.Instance.Status != Game.EStatus.GAME) {
+        if (IsIgnoreCardDrag) {
             return;
         }
 
@@ -24,6 +24,10 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
 		} else if (card.IsDraggable) {
             dragBegin(card);
         }
+    }
+
+    bool IsIgnoreCardDrag {
+        get { return Game.Instance.Status != Game.EStatus.GAME || IsAutoMoveCardToFinal; }
     }
 
 	void dragBegin(Card card) {
@@ -66,6 +70,8 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
     }
 
     void autoMoveCardAndSwitchDeckCardToFinalDeck() {
+        prepareForAutoMoveCardToFinalDeck();
+
         bool isDeckChange = true;
 
         while (isDeckChange) {
@@ -91,14 +97,38 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
         if (finalDeck != null) {
             var card = deck.TopCard;
 
+            Vector3 from = card.transform.position;
+
             deck.getOffCard(card);
             finalDeck.putOnCard(card);
+
+            Vector3 pos = card.transform.position;
+
+            card.fly(from, card.transform.position,
+                     () => { _numAutoMoveFlyCard--; card.transform.position = pos; },
+                     _autoMoveCardFlyDelay, _autoMoveCardFlyZ);
+
+            _numAutoMoveFlyCard++;
+            _autoMoveCardFlyDelay += 0.1f;
+            _autoMoveCardFlyZ += -0.1f;
 
             return true;
         }
 
         return false;
     }
+
+    void prepareForAutoMoveCardToFinalDeck() {
+        _autoMoveCardFlyDelay = 0;
+        _autoMoveCardFlyZ = 0;
+        _numAutoMoveFlyCard = 0;
+    }
+
+    bool IsAutoMoveCardToFinal { get { return _numAutoMoveFlyCard > 0; } }
+
+    float _autoMoveCardFlyDelay = 0;
+    float _autoMoveCardFlyZ = 0;
+    int _numAutoMoveFlyCard = 0;
 
     void putCardOnFromDeck() {
         if (_dragFromDeck != null) {

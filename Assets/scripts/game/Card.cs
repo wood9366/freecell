@@ -54,7 +54,7 @@ public class Card : CustomMonoBehavior {
             _flyCompleteListeners = null;
         }
 
-        _isFlying = true;
+        _isFlying = false;
     }
 
     System.Action _flyCompleteListeners = null;
