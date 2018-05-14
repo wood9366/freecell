@@ -5,12 +5,20 @@ using UnityEngine;
 public class DeckDrag : MonoSingleton<DeckDrag> {
 
     void onMouseUpCard(Card card) {
+        if (Game.Instance.Status != Game.EStatus.GAME) {
+            return;
+        }
+
 		if (_isDragging) {
             dragEnd();
 		}
     }
 
     void onMouseDragCard(Card card) {
+        if (Game.Instance.Status != Game.EStatus.GAME) {
+            return;
+        }
+
 		if (_isDragging) {
             dragUpdate();
 		} else if (card.IsDraggable) {
@@ -21,18 +29,22 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
 	void dragBegin(Card card) {
 		_isDragging = true;
 
-        _dragOffset = transform.position - MousePosition;
+        _dragOffset = card.transform.position - MousePosition;
 
         _draggingCard = card;
         _dragFromDeck = card.DeckOn;
 
         card.DeckOn.getOffCard(card);
-		card.transform.SetParent(transform);
 
-        Vector3 pos = card.transform.localPosition;
-        pos.z = -0.1f;
-
-        card.transform.localPosition = pos;
+        int n = 0;
+        
+        card.foreachCardUp(x => {
+            x.transform.SetParent(transform, false);
+            x.transform.localScale = Vector3.one;
+            x.transform.localRotation = Quaternion.identity;
+            x.trans2d.anchoredPosition3D =
+                new Vector3(0, 0, -0.1f) + Config.Instance.CardStackOffset * n++;
+        });
 
         updatePosition();
 	}

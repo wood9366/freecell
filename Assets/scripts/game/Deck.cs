@@ -26,10 +26,6 @@ public class Deck : CustomMonoBehavior {
     }
 
     public void empty() {
-        if (TopCard != null) {
-            TopCard.foreachCardDown(x => GameObject.DestroyImmediate(x.gameObject));
-        }
-
         changeTopCard(null, true);
     }
 
@@ -38,17 +34,20 @@ public class Deck : CustomMonoBehavior {
 
     public void putOnCard(Card card) {
         if (TopCard != null) {
-            TopCard.putOnCard(card, CardStackOffset);
-        } else {
-            // first card set position on deck
-            card.transform.SetParent(transform, false);
-            card.transform.localScale = Vector3.one;
-            card.transform.localRotation = Quaternion.identity;
-            card.transform.localPosition = new Vector3(0, 0, -0.1f);
+            TopCard.putOnCard(card);
         }
+
+        int n = 0;
 
         card.foreachCardUp(x => {
             x.DeckOn = this;
+
+            x.transform.SetParent(transform, false);
+            x.transform.localScale = Vector3.one;
+            x.transform.localRotation = Quaternion.identity;
+            x.trans2d.anchoredPosition3D =
+                new Vector3(0, 0, -0.1f) + CardStackOffset * (NumCard + n++);
+
             if (x.UpCard == null) changeTopCard(x);
         });
     }

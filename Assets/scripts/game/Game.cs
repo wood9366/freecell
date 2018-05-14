@@ -3,15 +3,62 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Game : MonoSingleton<Game> {
+    public GameObject _SendDeck = null;
 	public List<Deck> _DeckSwitches = new List<Deck>(4);
 	public List<DeckFinal> _DeckFinals = new List<DeckFinal>(4);
 	public List<DeckCard> _DeckCards = new List<DeckCard>(8);
 
-	void Start() {
-		gameStart();
+    public enum EStatus {
+        INIT = 0,
+        DEAL,
+        GAME
     }
 
-	void gameStart() {
+    void Update() {
+        if (_status == EStatus.INIT) {
+            gameInit();
+
+            _status = EStatus.DEAL;
+        } else if (_status == EStatus.DEAL) {
+            if (_statusTime == 0) {
+                float delay = 0.0f;
+
+                foreach (var card in _cards) {
+                    iTween.MoveFrom(card.gameObject,
+                                    iTween.Hash("delay", delay,
+                                                "position", _SendDeck.transform.position,
+                                                "time", 1.0f));
+                    delay += 0.1f;
+                }
+            }
+
+            _statusTime += Time.deltaTime;
+
+            if (_statusTime >= _cards.Count * 0.1f + 0.5f) {
+                _statusTime = 0;
+                _status = EStatus.GAME;
+            }
+        }
+    }
+
+    public EStatus Status { get { return _status; } }
+
+    EStatus _status = EStatus.INIT;
+    float _statusTime = 0;
+
+    void gameInit() {
+        reset();
+        createCards();
+        shuffleCards();
+        fillCardDeckes();
+    }
+
+    void reset() {
+        foreach (var card in _cards) {
+            GameObject.DestroyImmediate(card.gameObject);
+        }
+        _cards.Clear();
+
 		foreach (var deck in _DeckSwitches) {
 			deck.empty();
 		}
@@ -23,28 +70,32 @@ public class Game : MonoSingleton<Game> {
 		foreach (var deck in _DeckCards) {
 			deck.empty();
 		}
+    }
 
+    void createCards() {
 		// generate card deckes by card id
 		// 0 ~ 12, spade
 		// 13 ~ 25, heard
 		// 26 ~ 38, club
 		// 39 ~ 51, diamond
 		int num = 52;
-		int[] cards = new int[num];
 
 		for (int i = 0; i < num; i++) {
-			cards[i] = i;
+            createCard(i);
 		}
+    }
 
+    void shuffleCards() {
 		for (int i = 0; i < 50; i++) {
-			int idx = Random.Range(0, num);
+			int idx = Random.Range(0, _cards.Count);
 
-			var temp = cards[idx];
-			cards[idx] = cards[num - 1];
-			cards[num - 1] = temp;
+			var temp = _cards[idx];
+			_cards[idx] = _cards[_cards.Count - 1];
+			_cards[_cards.Count - 1] = temp;
 		}
+    }
 
-		// fill cards into card deckes
+    void fillCardDeckes() {
 		int[] numCardDecks = new int[8] { 6, 7, 6, 7, 6, 7, 6, 7 };
 
 		for (int i = 0; i < 4; i++) {
@@ -61,34 +112,32 @@ public class Game : MonoSingleton<Game> {
 			int numCard = numCardDecks[i];
 
 			while (numCard-- > 0) {
-				var id = cards[cur++];
+                _DeckCards[i].putOnCard(_cards[cur++]);
 
-                if (CardData.IsValidCardId(id)) {
-					_DeckCards[i].putOnCard(createCard(id));
-				} else {
-					Debug.LogWarningFormat("fill card desk {0} with invalid id {1}", i, id);
-				}
-
-				if (cur >= num) {
+                if (cur >= _cards.Count) {
 					break;
 				}
 			}
 
-			if (cur >= num) {
+			if (cur >= _cards.Count) {
 				break;
 			}
 		}
-	}
+    }
 
-	Card createCard(int id) {
-		var obj = GameObject.Instantiate(ResourceMgr.Instance.getCardPrefab(),
+    Card createCard(int id) {
+		var card = GameObject.Instantiate(ResourceMgr.Instance.getCardPrefab(),
                                          Vector3.zero,
                                          Quaternion.identity);
 
-        obj.init(id);
+        card.init(id);
 
-		return obj;
+        _cards.Add(card);
+
+		return card;
 	}
+
+    List<Card> _cards = new List<Card>();
 
 #if UNITY_EDITOR
 	[ContextMenu("Auto Set Deck")]

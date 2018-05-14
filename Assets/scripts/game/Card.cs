@@ -60,18 +60,9 @@ public class Card : CustomMonoBehavior {
     public Card UpCard { get { return _upCard; } }
     public Card DownCard { get { return _downCard; } }
 
-    public void putOnCard(Card card, Vector3 offset) {
+    public void putOnCard(Card card) {
         _upCard = card;
         card._downCard = this;
-
-        card.transform.SetParent(transform);
-        card.transform.localScale = Vector3.one;
-        card.transform.localRotation = Quaternion.identity;
-        card.transform.localPosition = offset;
-    }
-
-    public void putOnCard(Card card) {
-        putOnCard(card, Vector3.zero);
     }
 
     public void getOffCard() {
