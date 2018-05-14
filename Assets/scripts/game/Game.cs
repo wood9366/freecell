@@ -52,19 +52,14 @@ public class Game : MonoSingleton<Game> {
     void enterStatusDeal() {
         // deal cards
         float delay = 1.0f;
-        float z = -2; // fly z start, overlap game desk z
+        float z = 0;
 
         foreach (var card in _cards) {
             Vector3 pos = card.transform.position;
 
-            Vector3 posDealTo = pos;
-            Vector3 posDealFrom = _SendDeck.transform.position;
-
-            posDealFrom.z = posDealTo.z = z;
-
-            card.fly(posDealFrom, posDealTo,
+            card.fly(_SendDeck.transform.position, pos,
                      () => card.transform.position = pos,
-                     delay);
+                     delay, z);
 
             z += -0.1f;
             delay += Config.Instance.DealCardInterval;

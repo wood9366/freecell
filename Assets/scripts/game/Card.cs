@@ -25,10 +25,15 @@ public class Card : CustomMonoBehavior {
 		}
 	}
 
-    public void fly(Vector3 from, Vector3 to, System.Action listener, float delay = 0) {
+    public void fly(Vector3 from, Vector3 to, System.Action listener,
+                    float delay = 0,
+                    float zoffset = 0)
+    {
         if (_isFlying) {
             return;
         }
+
+        to.z = from.z = -2.0f + zoffset; // -2 if card fly layer
 
         _flyCompleteListeners = listener;
 
