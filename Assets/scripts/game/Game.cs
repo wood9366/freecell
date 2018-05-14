@@ -15,35 +15,68 @@ public class Game : MonoSingleton<Game> {
     }
 
     void Update() {
+        checkStatusChange();
+        
         if (_status == EStatus.INIT) {
             gameInit();
-
-            _status = EStatus.DEAL;
+            changeStatus(EStatus.DEAL);
         } else if (_status == EStatus.DEAL) {
-            if (_statusTime == 0) {
-                float delay = 1.0f;
-
-                foreach (var card in _cards) {
-                    iTween.MoveFrom(card.gameObject,
-                                    iTween.Hash("delay", delay,
-                                                "position", _SendDeck.transform.position,
-                                                "speed", Config.Instance.CardFlySpeed));
-                    delay += Config.Instance.DealCardInterval;
-                }
-            }
-
-            _statusTime += Time.deltaTime;
-
-            if (_statusTime >= (_cards.Count - 1) * Config.Instance.DealCardInterval + 2.0f) {
-                _statusTime = 0;
-                _status = EStatus.GAME;
+            if (checkStatusEndByTime()) {
+                changeStatus(EStatus.GAME);
             }
         }
+    }
+
+    bool checkStatusEndByTime() {
+        _statusTime -= Time.deltaTime;
+
+        return _statusTime <= 0;
+    }
+
+    void checkStatusChange() {
+        if (_nextStatus != _status) {
+            _status = _nextStatus;
+
+            if (_status == EStatus.DEAL) {
+                enterStatusDeal();
+            }
+        }
+    }
+
+    void changeStatus(EStatus status) {
+        if (status != _status) {
+            _nextStatus = status;
+        }
+    }
+
+    void enterStatusDeal() {
+        // deal cards
+        float delay = 1.0f;
+        float z = -2; // fly z start, overlap game desk z
+
+        foreach (var card in _cards) {
+            Vector3 pos = card.transform.position;
+
+            Vector3 posDealTo = pos;
+            Vector3 posDealFrom = _SendDeck.transform.position;
+
+            posDealFrom.z = posDealTo.z = z;
+
+            card.fly(posDealFrom, posDealTo,
+                     () => card.transform.position = pos,
+                     delay);
+
+            z += -0.1f;
+            delay += Config.Instance.DealCardInterval;
+        }
+
+        _statusTime = (_cards.Count - 1) * Config.Instance.DealCardInterval + 2.0f;
     }
 
     public EStatus Status { get { return _status; } }
 
     EStatus _status = EStatus.INIT;
+    EStatus _nextStatus = EStatus.INIT;
     float _statusTime = 0;
 
     void gameInit() {

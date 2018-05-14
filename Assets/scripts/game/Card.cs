@@ -25,6 +25,36 @@ public class Card : CustomMonoBehavior {
 		}
 	}
 
+    public void fly(Vector3 from, Vector3 to, System.Action listener, float delay = 0) {
+        if (_isFlying) {
+            return;
+        }
+
+        _flyCompleteListeners = listener;
+
+        transform.position = to;
+
+        iTween.MoveFrom(gameObject,
+                        iTween.Hash("delay", delay,
+                                    "position", from,
+                                    "speed", Config.Instance.CardFlySpeed,
+                                    "oncomplete", "onFlyComplete"));
+
+        _isFlying = true;
+    }
+
+    void onFlyComplete() {
+        if (_flyCompleteListeners != null) {
+            _flyCompleteListeners();
+            _flyCompleteListeners = null;
+        }
+
+        _isFlying = true;
+    }
+
+    System.Action _flyCompleteListeners = null;
+    bool _isFlying = false;
+
     public Deck DeckOn {
         get { return _deck; }
         set { _deck = value; }
