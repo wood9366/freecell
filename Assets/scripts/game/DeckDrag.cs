@@ -102,10 +102,7 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
             deck.getOffCard(card);
             finalDeck.putOnCard(card);
 
-            Vector3 pos = card.transform.position;
-
-            card.fly(from, card.transform.position,
-                     () => { _numAutoMoveFlyCard--; card.transform.position = pos; },
+            card.fly(from, card.transform.position, () => _numAutoMoveFlyCard--,
                      _autoMoveCardFlyDelay, _autoMoveCardFlyZ);
 
             _numAutoMoveFlyCard++;

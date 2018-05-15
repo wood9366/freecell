@@ -33,23 +33,35 @@ public class Card : CustomMonoBehavior {
             return;
         }
 
+        // save card move to position before z adjust
+        _flyToPosition = to;
+
+        // move card to move from position before z adjust
+        transform.position = from;
+
+        // adjust card z when fly, make sure its on up of all cards
         to.z = from.z = Game.Instance._SendDeck.transform.position.z
             + zoffset;
 
         _flyCompleteListeners = listener;
 
-        transform.position = to;
+        Timer.Instance.setTimeOut(delay, () => {
+            // move card to adjust z move from position
+            transform.position = from;
 
-        iTween.MoveFrom(gameObject,
-                        iTween.Hash("delay", delay,
-                                    "position", from,
-                                    "speed", Config.Instance.CardFlySpeed,
-                                    "oncomplete", "onFlyComplete"));
+            iTween.MoveTo(gameObject,
+                          iTween.Hash("position", to,
+                                      "speed", Config.Instance.CardFlySpeed,
+                                      "oncomplete", "onFlyComplete"));
+        });
 
         _isFlying = true;
     }
 
     void onFlyComplete() {
+        // move card to move to position before z adjust
+        transform.position = _flyToPosition;
+
         if (_flyCompleteListeners != null) {
             _flyCompleteListeners();
             _flyCompleteListeners = null;
@@ -60,6 +72,7 @@ public class Card : CustomMonoBehavior {
 
     System.Action _flyCompleteListeners = null;
     bool _isFlying = false;
+    Vector3 _flyToPosition = Vector3.zero;
 
     public Deck DeckOn {
         get { return _deck; }

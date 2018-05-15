@@ -186,16 +186,8 @@ public class Game : MonoSingleton<Game> {
 
                 _DeckCards[i].putOnCard(card);
 
-                Vector3 pos = card.transform.position;
-
-                card.fly(_SendDeck.transform.position, pos,
-                        () => {
-                            card.transform.position = pos;
-
-                            if (--numFlyCard == 0) {
-                                changeStatus(EStatus.GAME);
-                            }
-                        },
+                card.fly(_SendDeck.transform.position, card.transform.position,
+                        () => { if (--numFlyCard == 0) changeStatus(EStatus.GAME); },
                         delayFlyCard, zOffsetFlyCard);
 
                 numFlyCard++;
