@@ -2,9 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonoSingleton<T> : MonoBehaviour {
+public class MonoSingleton<T> : MonoBehaviour where T: MonoBehaviour {
 
-    static public T Instance { get { return sInstance; } }
+    static public T Instance {
+        get {
+            if (sInstance == null) {
+                var obj = new GameObject("_" + typeof(T).FullName);
+
+                sInstance = obj.AddComponent<T>();
+            }
+
+            return sInstance;
+        }
+    }
+
     static T sInstance;
 
     protected virtual void load() { }
