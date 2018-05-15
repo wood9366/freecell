@@ -27,7 +27,8 @@ public class Card : CustomMonoBehavior {
 
     public void fly(Vector3 from, Vector3 to, System.Action listener,
                     float delay = 0,
-                    float zoffset = 0)
+                    float zoffset = 0,
+                    bool isAdjustZ = true)
     {
         if (_isFlying) {
             return;
@@ -39,9 +40,11 @@ public class Card : CustomMonoBehavior {
         // move card to move from position before z adjust
         transform.position = from;
 
-        // adjust card z when fly, make sure its on up of all cards
-        to.z = from.z = Game.Instance._SendDeck.transform.position.z
-            + zoffset;
+        if (isAdjustZ) {
+            // adjust card z when fly, make sure its on up of all cards
+            to.z = from.z = Game.Instance._SendDeck.transform.position.z
+                + zoffset;
+        }
 
         _flyCompleteListeners = listener;
 

@@ -14,7 +14,8 @@ public class Game : MonoSingleton<Game> {
         READY,
         PREPARE,
         DEAL,
-        GAME
+        GAME,
+        DROP
     }
 
     public int NumEmptySwitchDeck {
@@ -44,6 +45,14 @@ public class Game : MonoSingleton<Game> {
     }
 
     void onClickBtnShuffle() {
+        if (Status == EStatus.GAME) {
+            changeStatus(EStatus.DROP);
+        } else {
+            shuffle();
+        }
+    }
+
+    void shuffle() {
         reset();
         changeStatus(EStatus.PREPARE);
     }
@@ -70,6 +79,8 @@ public class Game : MonoSingleton<Game> {
                 enterStatusDeal();
             } else if (_status == EStatus.GAME) {
                 enterStatusGame();
+            } else if (_status == EStatus.DROP) {
+                enterStatusDrop();
             }
         }
     }
@@ -99,6 +110,27 @@ public class Game : MonoSingleton<Game> {
     void enterStatusGame() {
         enableBtnShuffle();
         DeckDrag.Instance.autoMoveCardAndSwitchDeckCardToFinalDeck();
+    }
+
+    void enterStatusDrop() {
+        if (_cards.Count > 0) {
+            int numShuffleCardFly = 0;
+            float delay = 0;
+
+            foreach (var card in _cards) {
+                Vector3 to = card.transform.position;
+                to.y = _SendDeck.transform.position.y;
+
+                card.fly(card.transform.position, to,
+                         () => { if (--numShuffleCardFly == 0) shuffle(); },
+                         delay, 0, false);
+
+                numShuffleCardFly++;
+                delay += 0.05f;
+            }
+        } else {
+            shuffle();
+        }
     }
 
     public EStatus Status { get { return _status; } }
