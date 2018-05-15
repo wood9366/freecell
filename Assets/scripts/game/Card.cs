@@ -21,7 +21,7 @@ public class Card : CustomMonoBehavior {
 			_SpriteVal.color = ResourceMgr.Instance.getColorCardType(_card.Type);
 			_SpriteVal.sprite = ResourceMgr.Instance.getSpriteCardVal(_card.Val);
 
-            name = CardType.ToString() + "_" + CardVal.ToString();
+            name = CardType.ToString() + "_" + (CardVal + 1);
 		}
 	}
 
