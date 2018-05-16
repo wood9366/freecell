@@ -1,0 +1,12 @@
+* Tasks [3/11]
+- [X] basic free cell logic
+- [X] card fly animation
+- [X] run in ios platform
+- [ ] run in web
+- [ ] adjust for different screen size
+- [ ] input manager(support unity, mobile or web)
+- [ ] refactor code use correct free cell game word
+- [ ] run in android platform
+- [ ] undo
+- [ ] add menu
+- [ ] improve card art
