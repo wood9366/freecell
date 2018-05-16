@@ -4,19 +4,19 @@ using UnityEngine;
 
 [ExecuteInEditMode]
 public class Sprite2d : CustomMonoBehavior {
-	public bool _AutoAdjustSize = true;
+	public bool _AutoAdjustColliderSize = true;
 
 	void Update() {
 		#if UNITY_EDITOR
-		if (_AutoAdjustSize && !Application.isPlaying) {
-			if (sprite.drawMode == SpriteDrawMode.Simple) {
-				trans2d.sizeDelta = new Vector2(
-					sprite.sprite.rect.width / sprite.sprite.pixelsPerUnit,
-					sprite.sprite.rect.height / sprite.sprite.pixelsPerUnit);
-			} else {
-				sprite.size = trans2d.rect.size;
-			}
-		}
+        if (!Application.isPlaying) {
+            if (_AutoAdjustColliderSize && collider2d != null) {
+                BoxCollider2D box = collider2d as BoxCollider2D;
+
+                if (box != null) {
+                    box.size = sprite.size;
+                }
+            }
+        }
 		#endif
 	}
 

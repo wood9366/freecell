@@ -9,7 +9,6 @@ public class ScreenPixelPerfectInspector : Editor {
 		_owner = (ScreenPixelPerfect)target;
 		_cam = serializedObject.FindProperty("_Cam");
 		_height = serializedObject.FindProperty("_Height");
-		_isDisplayPreferRect = serializedObject.FindProperty("_IsDisplayPreferRect");
 		_isDisplayPixelRect = serializedObject.FindProperty("_IsDisplayPixelRect");
 	}
 
@@ -17,7 +16,6 @@ public class ScreenPixelPerfectInspector : Editor {
     SerializedProperty _cam = null;
 	SerializedProperty _height = null;
 	SerializedProperty _isDisplayPixelRect = null;
-	SerializedProperty _isDisplayPreferRect = null;
 
 	public override void OnInspectorGUI() {
 		GUILayout.BeginVertical("box");
@@ -44,14 +42,13 @@ public class ScreenPixelPerfectInspector : Editor {
 		if (GUILayout.Button("c", GUILayout.Width(20), GUILayout.Height(20))) {
 			_owner.calculatePixelPerfect();
 		}
+		_isDisplayPixelRect.boolValue = EditorGUILayout.Toggle(_isDisplayPixelRect.boolValue);
 
 		GUILayout.Label(string.Format("Prefer Size <color=#ff0000>{0} x {1}</color>",
 			_owner.width, _owner.height), labelStyle);
-		_isDisplayPreferRect.boolValue = EditorGUILayout.Toggle(_isDisplayPreferRect.boolValue);
 
 		GUILayout.Label(string.Format("Pixel Size <color=#0000ff>{0} x {1}</color>",
 			camera.pixelWidth, camera.pixelHeight), labelStyle);
-		_isDisplayPixelRect.boolValue = EditorGUILayout.Toggle(_isDisplayPixelRect.boolValue);
 
 		GUILayout.FlexibleSpace();
 

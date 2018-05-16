@@ -15,18 +15,6 @@ public class CustomMonoBehavior : MonoBehaviour {
 
 	SpriteRenderer _sprite = null;
 
-	public RectTransform trans2d {
-		get {
-			if (_trans2d == null) {
-				_trans2d = GetComponent<RectTransform>();
-			}
-
-			return _trans2d;
-		}
-	}
-
-	RectTransform _trans2d = null;
-
     public Collider2D collider2d {
         get {
             if (_collider2d == null) {

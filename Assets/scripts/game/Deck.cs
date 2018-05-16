@@ -45,7 +45,7 @@ public class Deck : CustomMonoBehavior {
             x.transform.SetParent(transform, false);
             x.transform.localScale = Vector3.one;
             x.transform.localRotation = Quaternion.identity;
-            x.trans2d.anchoredPosition3D =
+            x.transform.localPosition =
                 Config.Instance.CardStackInitial + CardStackOffset * (NumCard + n++);
 
             if (x.UpCard == null) changeTopCard(x);

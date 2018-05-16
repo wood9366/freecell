@@ -258,9 +258,9 @@ public class Game : MonoSingleton<Game> {
 #if UNITY_EDITOR
 	[ContextMenu("Auto Set Deck")]
 	void autoSetDeck() {
-		setDeck<Deck>("2d/SwitchDecks", _DeckSwitches);
-		setDeck<DeckFinal>("2d/FinalDecks", _DeckFinals);
-		setDeck<DeckCard>("2d/CardDecks", _DeckCards);
+		setDeck<Deck>("2d/Desk/SwitchDecks", _DeckSwitches);
+		setDeck<DeckFinal>("2d/Desk/FinalDecks", _DeckFinals);
+		setDeck<DeckCard>("2d/Desk/CardDecks", _DeckCards);
 	}
 
 	void setDeck<T>(string path, List<T> _deckes) {
