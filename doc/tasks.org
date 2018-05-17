@@ -6,8 +6,8 @@
 - [X] run in mac
 - [X] run in android
 - [X] input manager(support unity, mobile or web)
-- [ ] adjust for different screen size
 - [ ] refactor code use correct free cell game word
 - [ ] undo
 - [ ] add menu
+- [ ] adjust for different screen size
 - [ ] improve card art
