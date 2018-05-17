@@ -23,7 +23,7 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
 
         var card = collider.GetComponent<Card>();
 
-        if (card != null) {
+        if (card != null && card.IsDraggable) {
             dragBegin(pos, card);
         }
     }
@@ -33,7 +33,9 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
             return;
         }
 
-        dragUpdate(pos);
+        if (_draggingCard != null) {
+            dragUpdate(pos);
+        }
     }
 
     void onDragEnd(Vector3 pos, Collider2D collider) {
@@ -41,7 +43,9 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
             return;
         }
 
-        dragEnd(pos);
+        if (_draggingCard != null) {
+            dragEnd(pos);
+        }
     }
 
     bool IsIgnoreCardDrag {

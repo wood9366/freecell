@@ -1,11 +1,11 @@
-* Tasks [6/12]
+* Tasks [7/12]
 - [X] basic free cell logic
 - [X] card fly animation
 - [X] run in ios platform
 - [X] run in web
 - [X] run in mac
 - [X] run in android
-- [ ] input manager(support unity, mobile or web)
+- [X] input manager(support unity, mobile or web)
 - [ ] adjust for different screen size
 - [ ] refactor code use correct free cell game word
 - [ ] undo
