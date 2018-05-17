@@ -4,26 +4,40 @@ using UnityEngine;
 
 public class DeckDrag : MonoSingleton<DeckDrag> {
 
-    void onMouseUpCard(Card card) {
-        if (IsIgnoreCardDrag) {
-            return;
-        }
-
-		if (_isDragging) {
-            dragEnd();
-		}
+    protected override void init() {
+        Game.Instance.CardOperation.OnDrag += onDragCard;
+        Game.Instance.CardOperation.OnDragEnd += onDragCardEnd;
     }
 
-    void onMouseDragCard(Card card) {
+    protected override void release() {
+        Game.Instance.CardOperation.OnDrag -= onDragCard;
+        Game.Instance.CardOperation.OnDragEnd -= onDragCardEnd;
+    }
+    
+    void onDragCard(Vector3 pos, Card card) {
         if (IsIgnoreCardDrag) {
             return;
         }
+
+        _mousePosition = pos;
 
 		if (_isDragging) {
             dragUpdate();
 		} else if (card.IsDraggable) {
             dragBegin(card);
         }
+    }
+
+    void onDragCardEnd(Vector3 pos, Card card) {
+        if (IsIgnoreCardDrag) {
+            return;
+        }
+
+        _mousePosition = pos;
+
+		if (_isDragging) {
+            dragEnd();
+		}
     }
 
     bool IsIgnoreCardDrag {
@@ -210,9 +224,8 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
 		transform.position = pos;
 	}
 
-    Vector3 MousePosition {
-        get { return Camera.main.ScreenToWorldPoint(Input.mousePosition); }
-    }
+    Vector3 MousePosition { get { return _mousePosition; } }
+    Vector2 _mousePosition = Vector3.zero;
 
     Vector3 _dragOffset = Vector3.zero;
     Deck _dragFromDeck = null;

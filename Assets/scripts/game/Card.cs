@@ -146,14 +146,4 @@ public class Card : CustomMonoBehavior {
     Card _upCard = null;
     Card _downCard = null;
     #endregion
-
-    #region Mouse Event
-	void OnMouseDrag() {
-		DeckDrag.Instance.SendMessage("onMouseDragCard", this);
-	}
-
-	void OnMouseUp() {
-		DeckDrag.Instance.SendMessage("onMouseUpCard", this);
-	}
-    #endregion
 }
