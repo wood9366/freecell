@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputMgr : MonoSingleton<InputMgr> {
+public class InputMgr : Singleton<InputMgr> {
     public System.Action<Vector2> OnDrag;
     public System.Action<Vector2> OnDragEnd;
     public System.Action<Vector2> OnTap;
@@ -10,7 +10,7 @@ public class InputMgr : MonoSingleton<InputMgr> {
     const float TAP_TIME_MAX = 0.2f;
     const float HOLD_TIME_MIN = 0.3f;
 
-    void Update() {
+    public void update() {
         #if UNITY_EDITOR || UNITY_STANDALONE
         detectMouse();
         #elif UNITY_IOS || UNITY_ANDROID

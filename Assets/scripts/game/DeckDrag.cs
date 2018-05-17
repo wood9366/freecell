@@ -5,49 +5,54 @@ using UnityEngine;
 public class DeckDrag : MonoSingleton<DeckDrag> {
 
     protected override void init() {
-        Game.Instance.CardOperation.OnDrag += onDragCard;
-        Game.Instance.CardOperation.OnDragEnd += onDragCardEnd;
+        EventSystem2D.Instance.OnDragStart += onDragStart;
+        EventSystem2D.Instance.OnDrag += onDrag;
+        EventSystem2D.Instance.OnDragEnd += onDragEnd;
     }
 
     protected override void release() {
-        Game.Instance.CardOperation.OnDrag -= onDragCard;
-        Game.Instance.CardOperation.OnDragEnd -= onDragCardEnd;
+        EventSystem2D.Instance.OnDragStart -= onDragStart;
+        EventSystem2D.Instance.OnDrag -= onDrag;
+        EventSystem2D.Instance.OnDragEnd -= onDragEnd;
+    }
+
+    void onDragStart(Vector3 pos, Collider2D collider) {
+        if (IsIgnoreCardDrag) {
+            return;
+        }
+
+        var card = collider.GetComponent<Card>();
+
+        if (card != null) {
+            dragBegin(pos, card);
+        }
     }
     
-    void onDragCard(Vector3 pos, Card card) {
+    void onDrag(Vector3 pos, Collider2D collider) {
         if (IsIgnoreCardDrag) {
             return;
         }
 
-        _mousePosition = pos;
-
-		if (_isDragging) {
-            dragUpdate();
-		} else if (card.IsDraggable) {
-            dragBegin(card);
-        }
+        dragUpdate(pos);
     }
 
-    void onDragCardEnd(Vector3 pos, Card card) {
+    void onDragEnd(Vector3 pos, Collider2D collider) {
         if (IsIgnoreCardDrag) {
             return;
         }
 
-        _mousePosition = pos;
-
-		if (_isDragging) {
-            dragEnd();
-		}
+        dragEnd(pos);
     }
 
     bool IsIgnoreCardDrag {
-        get { return Game.Instance.Status != Game.EStatus.GAME || IsAutoMoveCardToFinal; }
+        get {
+            return Game.Instance.Status != Game.EStatus.GAME
+                || IsAutoMoveCardToFinal;
+        }
     }
 
-	void dragBegin(Card card) {
-		_isDragging = true;
-
-        _dragOffset = card.transform.position - MousePosition;
+	void dragBegin(Vector3 pos, Card card) {
+        _dragOffset = card.transform.position - pos;
 
         _draggingCard = card;
         _dragFromDeck = card.DeckOn;
@@ -60,16 +65,16 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
             x.transform.SetParent(transform, false);
             x.transform.localScale = Vector3.one;
             x.transform.localRotation = Quaternion.identity;
-            x.transform.localPosition =
-                Config.Instance.CardStackInitial + Config.Instance.CardStackOffset * n++;
+            x.transform.localPosition = Config.Instance.CardStackInitial
+                + Config.Instance.CardStackOffset * n++;
         });
 
-        updatePosition();
+        updatePosition(pos);
 	}
 
-    void dragEnd() {
+    void dragEnd(Vector3 pos) {
         if (!tryPutCardOnFinalDeck()) {
-            if (!tryPutCardOnDragOnDeck()) {
+            if (!tryPutCardOnDragOnDeck(pos)) {
                 putCardOnFromDeck();
             }
         }
@@ -79,8 +84,6 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
         _deckDragOn = null;
         _draggingCard = null;
         _dragFromDeck = null;
-
-        _isDragging = false;
     }
 
     public void autoMoveCardAndSwitchDeckCardToFinalDeck() {
@@ -147,24 +150,24 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
         }
     }
 
-    bool tryPutCardOnDragOnDeck() {
+    bool tryPutCardOnDragOnDeck(Vector3 pos) {
         _deckDragOn = null;
 
         foreach (var deck in Game.Instance._DeckCards) {
             if (deck.isOver(_draggingCard)) {
-                dragOverDeck(deck);
+                dragOverDeck(pos, deck);
             }
         }
 
         foreach (var deck in Game.Instance._DeckFinals) {
             if (deck.isOver(_draggingCard)) {
-                dragOverDeck(deck);
+                dragOverDeck(pos, deck);
             }
         }
 
         foreach (var deck in Game.Instance._DeckSwitches) {
             if (deck.isOver(_draggingCard)) {
-                dragOverDeck(deck);
+                dragOverDeck(pos, deck);
             }
         }
 
@@ -199,8 +202,8 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
         return null;
     }
 
-    void dragOverDeck(Deck deck) {
-        float d = Vector3.Distance(MousePosition, deck.transform.position);
+    void dragOverDeck(Vector3 pos, Deck deck) {
+        float d = Vector3.Distance(pos, deck.transform.position);
 
         if (_deckDragOn == null || d < _distanceDeckDragOn) {
             _deckDragOn = deck;
@@ -211,24 +214,20 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
     Deck _deckDragOn = null;
     float _distanceDeckDragOn = 0;
 
-    void dragUpdate() {
-        updatePosition();
+    void dragUpdate(Vector3 pos) {
+        updatePosition(pos);
     }
 
-	void updatePosition() {
+	void updatePosition(Vector3 pos) {
         float z = transform.position.z;
 
-		Vector3 pos = MousePosition + _dragOffset;
+		pos += _dragOffset;
         pos.z = z;
 
 		transform.position = pos;
 	}
 
-    Vector3 MousePosition { get { return _mousePosition; } }
-    Vector2 _mousePosition = Vector3.zero;
-
     Vector3 _dragOffset = Vector3.zero;
     Deck _dragFromDeck = null;
-	bool _isDragging = false;
 	Card _draggingCard = null;
 }

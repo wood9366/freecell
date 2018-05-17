@@ -36,21 +36,22 @@ public class Game : MonoSingleton<Game> {
         }
     }
 
-    public DetectCardOperation CardOperation {
-        get { return _detectCardOperation; }
-    }
-
     protected override void init() {
-        _detectCardOperation.init();
+        EventSystem2D.Instance.init();
 
         if (_BtnShuffle != null) {
-            MonoEventListener.Get(_BtnShuffle).OnMouseClick = onClickBtnShuffle;
+            EventListener2D.Get(_BtnShuffle).OnClick = onClickBtnShuffle;
         }
 
         changeStatus(EStatus.READY);
     }
 
+    protected override void release() {
+        EventSystem2D.Instance.release();
+    }
+
     void Update() {
+        InputMgr.Instance.update();
         checkStatusChange();
     }
 
@@ -260,7 +261,6 @@ public class Game : MonoSingleton<Game> {
 	}
 
     List<Card> _cards = new List<Card>();
-    DetectCardOperation _detectCardOperation = new DetectCardOperation();
 
 #if UNITY_EDITOR
 	[ContextMenu("Auto Set Deck")]
