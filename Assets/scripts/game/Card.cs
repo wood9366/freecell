@@ -28,7 +28,9 @@ public class Card : CustomMonoBehavior {
     public void fly(Vector3 from, Vector3 to, System.Action listener,
                     float delay = 0,
                     float zoffset = 0,
-                    bool isAdjustZ = true)
+                    bool isAdjustZ = true,
+                    float speed = 0,
+                    iTween.EaseType easeType = iTween.EaseType.linear)
     {
         if (_isFlying) {
             return;
@@ -54,7 +56,8 @@ public class Card : CustomMonoBehavior {
 
             iTween.MoveTo(gameObject,
                           iTween.Hash("position", to,
-                                      "speed", Config.Instance.CardFlySpeed,
+                                      "speed", speed > 0 ? speed : Config.Instance.CardFlySpeed,
+                                      "easetype", easeType,
                                       "oncomplete", "onFlyComplete"));
         });
 

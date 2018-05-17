@@ -124,7 +124,7 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
             finalDeck.putOnCard(card);
 
             card.fly(from, card.transform.position, () => _numAutoMoveFlyCard--,
-                     _autoMoveCardFlyDelay, _autoMoveCardFlyZ);
+                     _autoMoveCardFlyDelay, _autoMoveCardFlyZ, true, 0, iTween.EaseType.easeOutExpo);
 
             _numAutoMoveFlyCard++;
             _autoMoveCardFlyDelay += 0.1f;

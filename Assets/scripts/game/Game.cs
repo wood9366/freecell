@@ -121,32 +121,14 @@ public class Game : MonoSingleton<Game> {
 
     void enterStatusDrop() {
         if (_cards.Count > 0) {
-            _cards.Sort((a, b) => {
-                var apos = a.transform.position;
-                var bpos = b.transform.position;
-
-                if (apos.x < bpos.x) {
-                    return -1;
-                } else if (apos.x > bpos.x) {
-                    return 1;
-                } else {
-                    return apos.y < bpos.y ? -1 : (apos.y > bpos.y ? 1 : 0);
-                }
-            });
-
             int numShuffleCardFly = 0;
-            float delay = 0;
 
             foreach (var card in _cards) {
-                Vector3 to = card.transform.position;
-                to.y = _SendDeck.transform.position.y;
-
-                card.fly(card.transform.position, to,
+                card.fly(card.transform.position, _SendDeck.transform.position,
                          () => { if (--numShuffleCardFly == 0) shuffle(); },
-                         delay, 0, false);
+                         Random.Range(0, 0.2f), 0, false, 20, iTween.EaseType.linear);
 
                 numShuffleCardFly++;
-                delay += 0.05f;
             }
         } else {
             shuffle();
@@ -240,7 +222,7 @@ public class Game : MonoSingleton<Game> {
 
                 card.fly(_SendDeck.transform.position, card.transform.position,
                         () => { if (--numFlyCard == 0) changeStatus(EStatus.GAME); },
-                        delayFlyCard, zOffsetFlyCard);
+                         delayFlyCard, zOffsetFlyCard, true, 0, iTween.EaseType.easeOutExpo);
 
                 numFlyCard++;
                 zOffsetFlyCard += -0.1f;
