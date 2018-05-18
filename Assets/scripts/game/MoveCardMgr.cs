@@ -14,8 +14,10 @@ public class MoveCardMgr : Singleton<MoveCardMgr> {
 
         // remove commands after prev cmd idx
         // becase new cmd comming, old cmd history branch should remove
-        if (PrevCmdIdx + 1 >= 0 && PrevCmdIdx < _cmds.Count - 1) {
-            _cmds.RemoveRange(PrevCmdIdx + 1, _cmds.Count - PrevCmdIdx + 1);
+        int n = _cmds.Count - (PrevCmdIdx + 1);
+
+        if (n > 0) {
+            _cmds.RemoveRange(PrevCmdIdx + 1, n);
         }
 
         _cmds.Add(cmd);
