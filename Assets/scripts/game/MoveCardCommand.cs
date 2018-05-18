@@ -10,15 +10,30 @@ public class MoveCardCommand : ICommand {
     }
 
     public void run() {
+        Vector3 from = _moveCard.transform.position;
+
         _deckFrom.getOffCard(_moveCard);
         _deckTo.putOnCard(_moveCard);
+
+        if (_isRedo) {
+            _moveCard.fly(from, _moveCard.transform.position, null, 0, 0, false, 10,
+                        iTween.EaseType.easeOutExpo);
+        } else {
+            _isRedo = true;
+        }
     }
 
     public void undo() {
+        Vector3 from = _moveCard.transform.position;
+
         _deckTo.getOffCard(_moveCard);
         _deckFrom.putOnCard(_moveCard);
+
+        _moveCard.fly(from, _moveCard.transform.position, null, 0, 0, false, 10,
+                      iTween.EaseType.easeOutExpo);
     }
 
+    bool _isRedo = false;
     Deck _deckFrom;
     Card _moveCard;
     Deck _deckTo;
