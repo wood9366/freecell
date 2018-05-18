@@ -109,8 +109,7 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
 
             Vector3 from = card.transform.position;
 
-            deck.getOffCard(card);
-            finalDeck.putOnCard(card);
+            MoveCardMgr.Instance.move(new MoveCardCommand(card, finalDeck));
 
             card.fly(from, card.transform.position, () => _numAutoMoveFlyCard--,
                      _autoMoveCardFlyDelay, _autoMoveCardFlyZ, true, 0, iTween.EaseType.easeOutExpo);
