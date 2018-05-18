@@ -47,14 +47,15 @@ public class Game : MonoSingleton<Game> {
     protected override void init() {
         EventSystem2D.Instance.init();
 
-        if (_BtnShuffle != null) {
-            EventListener2D.Get(_BtnShuffle).OnClick = onClickBtnShuffle;
-        }
+        EventListener2D.Get(_BtnShuffle).OnClick = onClickBtnShuffle;
 
-        if (_ToggleAuto != null) {
-            _ToggleAuto.IsOn = IsAutoPutCardToFinal;
-            _ToggleAuto.OnToggle = onToggleAuto;
-        }
+        _ToggleAuto.IsOn = IsAutoPutCardToFinal;
+        _ToggleAuto.OnToggle = onToggleAuto;
+
+        _BtnUndo.OnClick = MoveCardMgr.Instance.undo;
+
+        MoveCardMgr.Instance.OnCommandCursorChange +=
+            () => _BtnUndo.IsEnabled = MoveCardMgr.Instance.CanUndo;
 
         changeStatus(EStatus.READY);
     }
@@ -122,7 +123,7 @@ public class Game : MonoSingleton<Game> {
     void enterStatusReady() {
         reset();
         enableBtnShuffle();
-        _BtnUndo.IsEnabled = false;
+        _BtnUndo.IsEnabled = MoveCardMgr.Instance.CanUndo;
     }
 
     void enterStatusPrepare() {
@@ -138,7 +139,6 @@ public class Game : MonoSingleton<Game> {
 
     void enterStatusGame() {
         enableBtnShuffle();
-        _BtnUndo.IsEnabled = true;
         DeckDrag.Instance.autoMoveCardAndSwitchDeckCardToFinalDeck();
     }
 

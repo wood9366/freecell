@@ -52,7 +52,7 @@ public class Deck : CustomMonoBehavior {
         });
     }
 
-    protected virtual Vector3 CardStackOffset { get { return Vector3.zero; } }
+    public virtual Vector3 CardStackOffset { get { return Vector3.zero; } }
 
     public void getOffCard(Card card) {
         if (isCardExist(card)) {

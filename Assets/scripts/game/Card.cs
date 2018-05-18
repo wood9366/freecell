@@ -13,6 +13,21 @@ public class Card : CustomMonoBehavior {
         return isDifferentTypeColor && isStepIncreasedVal;
     }
 
+    static public void MoveCard(Card card,
+                                Transform parent,
+                                Vector3 cardStackOffset,
+                                int numCard = 0) {
+        int n = 0;
+        
+        card.foreachCardUp(x => {
+            x.transform.SetParent(parent, false);
+            x.transform.localScale = Vector3.one;
+            x.transform.localRotation = Quaternion.identity;
+            x.transform.localPosition = Config.Instance.CardStackInitial
+                + cardStackOffset * (numCard + n++);
+        });
+    }
+
 	public void init(int id) {
         _card = CardData.Create(id);
 
@@ -107,6 +122,15 @@ public class Card : CustomMonoBehavior {
         get {
             int num = 0;
             foreachCardUp(x => num++);
+
+            return num;
+        }
+    }
+
+    public int NumCardDown {
+        get {
+            int num = 0;
+            foreachCardDown(x => num++);
 
             return num;
         }

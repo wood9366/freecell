@@ -53,5 +53,5 @@ public class DeckCard : Deck {
         return isPutOnRuleOK && isNumPutOnLinkedCardOK;
     }
 
-    protected override Vector3 CardStackOffset { get { return Config.Instance.CardStackOffset; } }
+    public override Vector3 CardStackOffset { get { return Config.Instance.CardStackOffset; } }
 }

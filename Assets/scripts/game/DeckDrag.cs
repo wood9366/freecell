@@ -57,37 +57,24 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
 
 	void dragBegin(Vector3 pos, Card card) {
         _dragOffset = card.transform.position - pos;
-
         _draggingCard = card;
-        _dragFromDeck = card.DeckOn;
 
-        card.DeckOn.getOffCard(card);
-
-        int n = 0;
-        
-        card.foreachCardUp(x => {
-            x.transform.SetParent(transform, false);
-            x.transform.localScale = Vector3.one;
-            x.transform.localRotation = Quaternion.identity;
-            x.transform.localPosition = Config.Instance.CardStackInitial
-                + Config.Instance.CardStackOffset * n++;
-        });
+        Card.MoveCard(_draggingCard, transform, Config.Instance.CardStackOffset);
 
         updatePosition(pos);
 	}
 
     void dragEnd(Vector3 pos) {
-        if (!tryPutCardOnFinalDeck()) {
-            if (!tryPutCardOnDragOnDeck(pos)) {
-                putCardOnFromDeck();
-            }
+        if (tryPutCardOnDragOnDeck(pos)) {
+            autoMoveCardAndSwitchDeckCardToFinalDeck();
+        } else {
+            Card.MoveCard(_draggingCard, _draggingCard.DeckOn.transform,
+                          _draggingCard.DeckOn.CardStackOffset,
+                          _draggingCard.NumCardDown - 1);
         }
-
-        autoMoveCardAndSwitchDeckCardToFinalDeck();
 
         _deckDragOn = null;
         _draggingCard = null;
-        _dragFromDeck = null;
     }
 
     public void autoMoveCardAndSwitchDeckCardToFinalDeck() {
@@ -150,12 +137,6 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
     float _autoMoveCardFlyZ = 0;
     int _numAutoMoveFlyCard = 0;
 
-    void putCardOnFromDeck() {
-        if (_dragFromDeck != null) {
-            _dragFromDeck.putOnCard(_draggingCard);
-        }
-    }
-
     bool tryPutCardOnDragOnDeck(Vector3 pos) {
         _deckDragOn = null;
 
@@ -178,22 +159,11 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
         }
 
         if (_deckDragOn != null && _deckDragOn.canPutOnCard(_draggingCard)) {
-            _deckDragOn.putOnCard(_draggingCard);
+            MoveCardMgr.Instance.move(
+                new MoveCardCommand(_draggingCard, _deckDragOn));
 
             return true;
         } 
-
-        return false;
-    }
-
-    bool tryPutCardOnFinalDeck() {
-        var deck = findFinalDeckCardCanPutOn(_draggingCard);
-
-        if (deck != null) {
-            deck.putOnCard(_draggingCard);
-
-            return true;
-        }
 
         return false;
     }
@@ -234,6 +204,5 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
 	}
 
     Vector3 _dragOffset = Vector3.zero;
-    Deck _dragFromDeck = null;
 	Card _draggingCard = null;
 }
