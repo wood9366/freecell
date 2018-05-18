@@ -23,4 +23,14 @@ public class EventListener2D : MonoBehaviour {
     void onDrag(Vector3 pos) { if (OnDrag != null) OnDrag(pos); }
     void onDragEnd(Vector3 pos) { if (OnDragEnd != null) OnDragEnd(pos); }
     void onClick(Vector3 pos) { if (OnClick != null) OnClick(); }
+
+    public void notifyEvent(string evt, Vector3 pos) {
+        switch (evt) {
+            case "onDragStart": onDragStart(pos); break;
+            case "onDrag": onDrag(pos); break;
+            case "onDragEnd": onDragEnd(pos); break;
+            case "onClick": onClick(pos); break;
+            default: break;
+        }
+    }
 }

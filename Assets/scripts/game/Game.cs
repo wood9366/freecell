@@ -8,6 +8,8 @@ public class Game : MonoSingleton<Game> {
 	public List<DeckFinal> _DeckFinals = new List<DeckFinal>(4);
 	public List<DeckCard> _DeckCards = new List<DeckCard>(8);
     public GameObject _BtnShuffle;
+    public Wood9366.Button _BtnUndo;
+    public Wood9366.Toggle _ToggleAuto;
 
     public enum EStatus {
         NONE = 0,
@@ -36,6 +38,12 @@ public class Game : MonoSingleton<Game> {
         }
     }
 
+    public bool IsAutoPutCardToFinal {
+        get { return _isAutoPutCardToFinal; }
+    }
+
+    bool _isAutoPutCardToFinal = false;
+
     protected override void init() {
         EventSystem2D.Instance.init();
 
@@ -43,16 +51,12 @@ public class Game : MonoSingleton<Game> {
             EventListener2D.Get(_BtnShuffle).OnClick = onClickBtnShuffle;
         }
 
+        if (_ToggleAuto != null) {
+            _ToggleAuto.IsOn = IsAutoPutCardToFinal;
+            _ToggleAuto.OnToggle = onToggleAuto;
+        }
+
         changeStatus(EStatus.READY);
-    }
-
-    protected override void release() {
-        EventSystem2D.Instance.release();
-    }
-
-    void Update() {
-        InputMgr.Instance.update();
-        checkStatusChange();
     }
 
     void onClickBtnShuffle() {
@@ -63,9 +67,26 @@ public class Game : MonoSingleton<Game> {
         }
     }
 
+    void onToggleAuto(bool isOn) {
+        _isAutoPutCardToFinal = isOn;
+
+        if (isOn) {
+            DeckDrag.Instance.autoMoveCardAndSwitchDeckCardToFinalDeck();
+        }
+    }
+
     void shuffle() {
         reset();
         changeStatus(EStatus.PREPARE);
+    }
+
+    protected override void release() {
+        EventSystem2D.Instance.release();
+    }
+
+    void Update() {
+        InputMgr.Instance.update();
+        checkStatusChange();
     }
 
     bool checkStatusEndByTime() {
@@ -101,6 +122,7 @@ public class Game : MonoSingleton<Game> {
     void enterStatusReady() {
         reset();
         enableBtnShuffle();
+        _BtnUndo.IsEnabled = false;
     }
 
     void enterStatusPrepare() {
@@ -116,6 +138,7 @@ public class Game : MonoSingleton<Game> {
 
     void enterStatusGame() {
         enableBtnShuffle();
+        _BtnUndo.IsEnabled = true;
         DeckDrag.Instance.autoMoveCardAndSwitchDeckCardToFinalDeck();
     }
 

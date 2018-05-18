@@ -91,6 +91,8 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
     }
 
     public void autoMoveCardAndSwitchDeckCardToFinalDeck() {
+        if (!Game.Instance.IsAutoPutCardToFinal) return;
+
         prepareForAutoMoveCardToFinalDeck();
 
         bool isDeckChange = true;

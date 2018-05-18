@@ -65,7 +65,7 @@ public class EventSystem2D : Singleton<EventSystem2D> {
         var listener = collider.GetComponent<EventListener2D>();
 
         if (listener != null) {
-            listener.gameObject.SendMessage(evt, TouchPositionWorld);
+            listener.notifyEvent(evt, TouchPositionWorld);
         }
     }
 
