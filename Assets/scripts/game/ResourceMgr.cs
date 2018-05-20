@@ -42,24 +42,28 @@ public class ResourceMgr : MonoSingleton<ResourceMgr> {
 	}
 
 #if UNITY_EDITOR
-	const string CARD_SPRITE_SHEET_PATH = "Assets/texture/poker.png";
+	const string CARD_NO_SPRITE_SHEET_PATH = "Assets/texture/poker_no.png";
+	const string CARD_COLOR_SPRITE_SHEET_PATH = "Assets/texture/poker_color.png";
 
 	[ContextMenu("AutoSetCardResource")]
 	void autoSetCardResource() {
-		Sprite[] sprites = AssetDatabase.LoadAllAssetRepresentationsAtPath(CARD_SPRITE_SHEET_PATH).OfType<Sprite>().ToArray();
-
-		string[] namesCardType = new string[4] {
-			"spade", "heart", "club", "diamond"
-		};
+		Sprite[] sprites = AssetDatabase.LoadAllAssetRepresentationsAtPath(CARD_NO_SPRITE_SHEET_PATH).OfType<Sprite>().ToArray();
 
 		foreach (var sp in sprites) {
 			for (int i = 1; i <= 13; i++) {
                 if (sp.name == i.ToString()) {
 					_CardData._SpriteValues[i - 1] = sp;
-					continue;
 				}
 			}
+        }
 
+		string[] namesCardType = new string[4] {
+			"spade", "heart", "club", "diamond"
+		};
+
+		sprites = AssetDatabase.LoadAllAssetRepresentationsAtPath(CARD_COLOR_SPRITE_SHEET_PATH).OfType<Sprite>().ToArray();
+
+		foreach (var sp in sprites) {
 			for (int i = 0; i < 4; i++) {
                 if (sp.name == namesCardType[i]) {
 					_CardData._SpriteTypes[i] = sp;

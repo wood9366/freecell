@@ -5,6 +5,7 @@ using UnityEngine;
 public class Card : CustomMonoBehavior {
 	public SpriteRenderer _SpriteType;
 	public SpriteRenderer _SpriteVal;
+	public SpriteRenderer _SpriteSign;
 
     static public bool IsLinkedCard(Card down, Card up) {
         bool isDifferentTypeColor = up.CardTypeColor != down.CardTypeColor;
@@ -33,8 +34,13 @@ public class Card : CustomMonoBehavior {
 
 		if (_card != null) {
 			_SpriteType.sprite = ResourceMgr.Instance.getSpriteCardType(_card.Type);
-			_SpriteVal.color = ResourceMgr.Instance.getColorCardType(_card.Type);
+
+			_SpriteSign.color = _SpriteVal.color =
+                ResourceMgr.Instance.getColorCardType(_card.Type);
+
 			_SpriteVal.sprite = ResourceMgr.Instance.getSpriteCardVal(_card.Val);
+
+            _SpriteSign.sprite = ResourceMgr.Instance.getSpriteCardType(_card.Type);
 
             name = CardType.ToString() + "_" + (CardVal + 1);
 		}

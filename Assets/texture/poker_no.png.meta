@@ -11,7 +11,7 @@ TextureImporter:
     21300008: 6
     21300010: 7
     21300012: 10
-    21300014: poker_7
+    21300014: 9
     21300016: heart
     21300018: 8
     21300020: 9
@@ -22,6 +22,16 @@ TextureImporter:
     21300030: club
     21300032: spade
     21300034: diamond
+    21300036: 8
+    21300038: 9
+    21300040: 11
+    21300042: 3
+    21300044: q
+    21300046: 0
+    21300048: j
+    21300050: k
+    21300052: a
+    21300054: poker_11
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -132,10 +142,10 @@ TextureImporter:
       name: 2
       rect:
         serializedVersion: 2
-        x: 8
-        y: 60
-        width: 32
-        height: 39
+        x: 0
+        y: 5
+        width: 51
+        height: 68
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,10 +156,10 @@ TextureImporter:
       name: 3
       rect:
         serializedVersion: 2
-        x: 49
-        y: 61
-        width: 30
-        height: 39
+        x: 58
+        y: 5
+        width: 53
+        height: 68
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,10 +170,10 @@ TextureImporter:
       name: 4
       rect:
         serializedVersion: 2
-        x: 89
-        y: 60
-        width: 30
-        height: 39
+        x: 115
+        y: 6
+        width: 57
+        height: 65
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,10 +184,10 @@ TextureImporter:
       name: 5
       rect:
         serializedVersion: 2
-        x: 126
-        y: 61
-        width: 34
-        height: 39
+        x: 177
+        y: 4
+        width: 51
+        height: 68
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,10 +198,10 @@ TextureImporter:
       name: 6
       rect:
         serializedVersion: 2
-        x: 166
-        y: 61
-        width: 28
-        height: 39
+        x: 236
+        y: 5
+        width: 52
+        height: 68
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,38 +212,10 @@ TextureImporter:
       name: 7
       rect:
         serializedVersion: 2
-        x: 201
-        y: 60
-        width: 27
-        height: 39
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: 10
-      rect:
-        serializedVersion: 2
-        x: 241
-        y: 61
-        width: 45
-        height: 38
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: heart
-      rect:
-        serializedVersion: 2
-        x: 307
-        y: 62
-        width: 38
-        height: 39
+        x: 295
+        y: 6
+        width: 51
+        height: 66
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,10 +226,10 @@ TextureImporter:
       name: 8
       rect:
         serializedVersion: 2
-        x: 5
-        y: 9
-        width: 32
-        height: 39
+        x: 353
+        y: 5
+        width: 54
+        height: 68
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,10 +240,38 @@ TextureImporter:
       name: 9
       rect:
         serializedVersion: 2
-        x: 40
-        y: 9
-        width: 29
-        height: 39
+        x: 412
+        y: 5
+        width: 53
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: 10
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 6
+        width: 105
+        height: 66
+      alignment: 9
+      pivot: {x: 0.19506748, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: 1
+      rect:
+        serializedVersion: 2
+        x: 771
+        y: 6
+        width: 67
+        height: 65
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -272,10 +282,10 @@ TextureImporter:
       name: 11
       rect:
         serializedVersion: 2
-        x: 78
-        y: 9
-        width: 34
-        height: 40
+        x: 586
+        y: 5
+        width: 46
+        height: 66
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -286,10 +296,10 @@ TextureImporter:
       name: 12
       rect:
         serializedVersion: 2
-        x: 117
-        y: 2
-        width: 35
-        height: 47
+        x: 640
+        y: 0
+        width: 63
+        height: 73
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -300,66 +310,10 @@ TextureImporter:
       name: 13
       rect:
         serializedVersion: 2
-        x: 163
-        y: 9
-        width: 35
-        height: 40
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: 1
-      rect:
-        serializedVersion: 2
-        x: 201
-        y: 10
-        width: 28
-        height: 39
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: club
-      rect:
-        serializedVersion: 2
-        x: 241
-        y: 7
-        width: 40
-        height: 45
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: spade
-      rect:
-        serializedVersion: 2
-        x: 290
-        y: 8
-        width: 40
-        height: 42
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: diamond
-      rect:
-        serializedVersion: 2
-        x: 341
-        y: 9
-        width: 25
-        height: 45
+        x: 711
+        y: 6
+        width: 61
+        height: 65
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
