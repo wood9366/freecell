@@ -194,6 +194,8 @@ public class Game : MonoSingleton<Game> {
 		foreach (var deck in _DeckCards) {
 			deck.empty();
 		}
+
+        MoveCardMgr.Instance.reset();
     }
 
     void createCards() {

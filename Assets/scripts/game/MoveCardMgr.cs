@@ -9,6 +9,10 @@ public class MoveCardMgr : Singleton<MoveCardMgr> {
         get { return  PrevCmdIdx >= 0 && PrevCmdIdx < _cmds.Count; }
     }
 
+    public void reset() {
+        _cmds.Clear();
+    }
+
     public void move(MoveCardCommand cmd) {
         cmd.run();
 
