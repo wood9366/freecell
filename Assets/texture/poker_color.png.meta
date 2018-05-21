@@ -8,6 +8,10 @@ TextureImporter:
     21300002: spade
     21300004: diamond
     21300006: heart
+    21300008: club
+    21300010: poker_color_0
+    21300012: poker_color_1
+    21300014: poker_color_2
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -49,7 +53,7 @@ TextureImporter:
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1
+  spritePixelsToUnits: 0.5
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -118,12 +122,12 @@ TextureImporter:
       name: club
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 40
-        height: 45
+        x: 4
+        y: 2
+        width: 43
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -132,12 +136,12 @@ TextureImporter:
       name: spade
       rect:
         serializedVersion: 2
-        x: 49
-        y: 1
-        width: 40
-        height: 42
+        x: 53
+        y: 3
+        width: 43
+        height: 45
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -146,12 +150,12 @@ TextureImporter:
       name: diamond
       rect:
         serializedVersion: 2
-        x: 100
-        y: 2
-        width: 25
-        height: 45
+        x: 104
+        y: 4
+        width: 28
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -160,10 +164,52 @@ TextureImporter:
       name: heart
       rect:
         serializedVersion: 2
-        x: 135
-        y: 3
-        width: 38
-        height: 39
+        x: 139
+        y: 5
+        width: 41
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: poker_color_0
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 5
+        width: 68
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: poker_color_1
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 11
+        width: 90
+        height: 154
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: poker_color_2
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 14
+        width: 133
+        height: 135
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

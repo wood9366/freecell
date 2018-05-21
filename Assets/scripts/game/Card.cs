@@ -33,14 +33,14 @@ public class Card : CustomMonoBehavior {
         _card = CardData.Create(id);
 
 		if (_card != null) {
-			_SpriteType.sprite = ResourceMgr.Instance.getSpriteCardType(_card.Type);
 
-			_SpriteSign.color = _SpriteVal.color =
+			_SpriteType.color = _SpriteSign.color = _SpriteVal.color =
                 ResourceMgr.Instance.getColorCardType(_card.Type);
 
-			_SpriteVal.sprite = ResourceMgr.Instance.getSpriteCardVal(_card.Val);
+			_SpriteSign.sprite = _SpriteType.sprite =
+                ResourceMgr.Instance.getSpriteCardType(_card.Type);
 
-            _SpriteSign.sprite = ResourceMgr.Instance.getSpriteCardType(_card.Type);
+			_SpriteVal.sprite = ResourceMgr.Instance.getSpriteCardVal(_card.Val);
 
             name = CardType.ToString() + "_" + (CardVal + 1);
 		}

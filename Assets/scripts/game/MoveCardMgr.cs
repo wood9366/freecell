@@ -11,6 +11,7 @@ public class MoveCardMgr : Singleton<MoveCardMgr> {
 
     public void reset() {
         _cmds.Clear();
+        PrevCmdIdx = -1;
     }
 
     public void move(MoveCardCommand cmd) {
