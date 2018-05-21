@@ -45,6 +45,8 @@ public class Game : MonoSingleton<Game> {
     bool _isAutoPutCardToFinal = false;
 
     protected override void init() {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
         EventSystem2D.Instance.init();
 
         EventListener2D.Get(_BtnShuffle).OnClick = onClickBtnShuffle;
