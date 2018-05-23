@@ -7,8 +7,8 @@ public class InputMgr : Singleton<InputMgr> {
     public System.Action<Vector2> OnDragEnd;
     public System.Action<Vector2> OnTap;
 
-    const float TAP_TIME_MAX = 0.2f;
-    const float HOLD_TIME_MIN = 0.3f;
+    const float TAP_TIME_MAX = 0.12f;
+    const float HOLD_TIME_MIN = 0.25f;
 
     public void update() {
         #if UNITY_EDITOR || UNITY_STANDALONE
