@@ -8,12 +8,27 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
         EventSystem2D.Instance.OnDragStart += onDragStart;
         EventSystem2D.Instance.OnDrag += onDrag;
         EventSystem2D.Instance.OnDragEnd += onDragEnd;
+        EventSystem2D.Instance.OnClick += onClick;
     }
 
     protected override void release() {
         EventSystem2D.Instance.OnDragStart -= onDragStart;
         EventSystem2D.Instance.OnDrag -= onDrag;
         EventSystem2D.Instance.OnDragEnd -= onDragEnd;
+        EventSystem2D.Instance.OnClick -= onClick;
+    }
+
+    void onClick(Vector3 pos, Collider2D collider) {
+        if (IsIgnoreCardDrag) {
+            return;
+        }
+
+        var card = collider.GetComponent<Card>();
+
+        if (card != null && card.IsTopCard) {
+            prepareForAutoMoveCardToFinalDeck();
+            tryMoveDeckCardToFinalDeck(card.DeckOn);
+        }
     }
 
     void onDragStart(Vector3 pos, Collider2D collider) {

@@ -1,4 +1,4 @@
-* Tasks [9/18]
+* Tasks [10/20]
 - [X] basic free cell logic
 - [X] card fly animation
 - [X] run in ios platform
@@ -7,8 +7,9 @@
 - [X] run in android
 - [X] input manager(support unity, mobile or web)
 - [X] add studio logo splash
-- [ ] refactor code use correct free cell game word
+- [X] add desk texture
 - [X] undo
+- [ ] refactor code use correct free cell game word
 - [ ] add menu
 - [ ] adjust for different screen size
 - [ ] improve card art
@@ -16,7 +17,9 @@
 - [ ] win/lose record
 - [ ] rotate screen
 - [ ] hints
+- [ ] automately analyze solve way after generate new round
 - [ ] move space at top and bottom
-* Bugs [0/2]
+* Bugs [0/3]
 - [ ] deck card to long, can't see end of deck
 - [ ] restart game without shuffle
+- [ ] drag card issue, need to track start click on card
