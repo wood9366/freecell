@@ -1,4 +1,4 @@
-* Tasks [9/15]
+* Tasks [8/16]
 - [X] basic free cell logic
 - [X] card fly animation
 - [X] run in ios platform
@@ -13,7 +13,8 @@
 - [ ] improve card art
 - [ ] dynamic charcter in the middle square
 - [ ] win/lose record
-- [X] rotate screen
+- [ ] rotate screen
+- [ ] hints
 * Bugs [0/2]
 - [ ] deck card to long, can't see end of deck
 - [ ] restart game without shuffle
