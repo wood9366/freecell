@@ -67,14 +67,16 @@ public class InputMgr : Singleton<InputMgr> {
                     _isTouchDrag = false;
                     break;
                 case TouchPhase.Moved:
-                    _isTouchDrag = true;
-                    if (OnDrag != null) OnDrag(touch.position);
+                    if (!IsTap) {
+                        _isTouchDrag = true;
+                        if (OnDrag != null) OnDrag(touch.position);
+                    }
                     break;
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     if (_isTouchDrag) {
                         if (OnDragEnd != null) OnDragEnd(touch.position);
-                    } else if (IsTap) {
+                    } else {
                         if (OnTap != null) OnTap(touch.position);
                     }
                     break;
