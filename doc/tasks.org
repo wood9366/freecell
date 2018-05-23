@@ -1,4 +1,4 @@
-* Tasks [7/12]
+* Tasks [9/15]
 - [X] basic free cell logic
 - [X] card fly animation
 - [X] run in ios platform
@@ -7,7 +7,13 @@
 - [X] run in android
 - [X] input manager(support unity, mobile or web)
 - [ ] refactor code use correct free cell game word
-- [ ] undo
+- [X] undo
 - [ ] add menu
 - [ ] adjust for different screen size
 - [ ] improve card art
+- [ ] dynamic charcter in the middle square
+- [ ] win/lose record
+- [X] rotate screen
+* Bugs [0/2]
+- [ ] deck card to long, can't see end of deck
+- [ ] restart game without shuffle
