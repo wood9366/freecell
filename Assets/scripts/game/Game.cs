@@ -45,6 +45,7 @@ public class Game : MonoSingleton<Game> {
     bool _isAutoPutCardToFinal = false;
 
     protected override void init() {
+        Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
         EventSystem2D.Instance.init();
