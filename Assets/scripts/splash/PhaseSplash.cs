@@ -36,7 +36,7 @@ public class PhaseSplash : MonoBehaviour {
     }
 
     void onFadeOutComplete() {
-        SceneManager.LoadScene("main");
+        SceneManager.LoadScene("menu");
     }
 
     SpriteRenderer SpriteLogo {
