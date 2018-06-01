@@ -47,8 +47,10 @@ public class ScreenPixelPerfectInspector : Editor {
 		GUILayout.Label(string.Format("Prefer Size <color=#ff0000>{0} x {1}</color>",
 			_owner.width, _owner.height), labelStyle);
 
-		GUILayout.Label(string.Format("Pixel Size <color=#0000ff>{0} x {1}</color>",
-			camera.pixelWidth, camera.pixelHeight), labelStyle);
+        if (camera != null) {
+            GUILayout.Label(string.Format("Pixel Size <color=#0000ff>{0} x {1}</color>",
+                camera.pixelWidth, camera.pixelHeight), labelStyle);
+        }
 
 		GUILayout.FlexibleSpace();
 
