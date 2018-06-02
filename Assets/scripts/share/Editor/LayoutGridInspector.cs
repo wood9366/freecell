@@ -50,39 +50,15 @@ public class LayoutGridInspector : Editor {
             EditorGUILayout.PropertyField(mCreateNamePrefix, new GUIContent("Name Prefix"));
 
             if (GUILayout.Button("Create")) {
-				createChildrenObjs();
-				mLayoutGrid.reLayout();
+				mLayoutGrid.create();
             }
 
             if (GUILayout.Button("Delete")) {
-                List<GameObject> deletedObjs = new List<GameObject>();
-
-                for (int i = 0; i < mLayoutGrid.transform.childCount; i++) {
-                    var obj = mLayoutGrid.transform.GetChild(i).gameObject;
-
-                    if (obj.GetInstanceID() != mCreateTemplate.objectReferenceInstanceIDValue) {
-                        deletedObjs.Add(obj);
-                    }
-                }
-
-                foreach (var obj in deletedObjs) {
-                    GameObject.DestroyImmediate(obj);
-                }
+                mLayoutGrid.delete();
             }
         }
 
         EditorGUILayout.EndVertical();
-    }
-
-	void createChildrenObjs() {
-        for (int i = 0; i < mNumCreate.intValue; i++) {
-            var o = GameObject.Instantiate(
-                mCreateTemplate.objectReferenceValue,
-                Vector3.one, Quaternion.identity, mLayoutGrid.transform) as GameObject;
-
-            o.name = string.Format("{0}_{1}", mCreateNamePrefix.stringValue, i);
-            o.SetActive(true);
-        }
     }
 
 	void uiLayout() {

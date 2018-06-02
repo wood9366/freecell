@@ -278,12 +278,32 @@ public class Game : MonoSingleton<Game> {
 		setDeck<Deck>("2d/Desk/SwitchDecks", _DeckSwitches);
 		setDeck<DeckFinal>("2d/Desk/FinalDecks", _DeckFinals);
 		setDeck<DeckCard>("2d/Desk/CardDecks", _DeckCards);
+
+        var types = new CardData.ECardType[] {
+            CardData.ECardType.SPADE,
+            CardData.ECardType.HEART,
+            CardData.ECardType.CLUB,
+            CardData.ECardType.DIAMOND
+        };
+
+        for (int i = 0; i < _DeckFinals.Count; i++) {
+            if (i < types.Length) {
+                _DeckFinals[i]._CardType = types[i];
+            }
+        }
 	}
 
 	void setDeck<T>(string path, List<T> _deckes) {
 		var obj = GameObject.Find(path);
 
 		if (obj != null) {
+            var grid = obj.GetComponent<LayoutGrid>();
+
+            if (grid != null) {
+                grid.delete();
+                grid.create();
+            }
+
 			var deckes = obj.GetComponentsInChildren<T>();
 
 			_deckes.Clear();

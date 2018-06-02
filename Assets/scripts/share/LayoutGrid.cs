@@ -28,9 +28,40 @@ public class LayoutGrid : MonoBehaviour {
 	public GameObject CreateTemplate = null;
     public string CreateNamePrefix = "";
 
-	#endif
+	void createChildrenObjs() {
+        for (int i = 0; i < NumCreate; i++) {
+            var o = GameObject.Instantiate(CreateTemplate,
+                Vector3.one, Quaternion.identity, transform) as GameObject;
 
-	public void reLayout() {
+            o.name = string.Format("{0}_{1}", CreateNamePrefix, i);
+            o.SetActive(true);
+        }
+    }
+
+    public void create() {
+        createChildrenObjs();
+        reLayout();
+    }
+
+    public void delete() {
+        List<GameObject> deletedObjs = new List<GameObject>();
+
+        for (int i = 0; i < transform.childCount; i++) {
+            var obj = transform.GetChild(i).gameObject;
+
+            if (obj.GetInstanceID() != CreateTemplate.GetInstanceID()) {
+                deletedObjs.Add(obj);
+            }
+        }
+
+        foreach (var obj in deletedObjs) {
+            GameObject.DestroyImmediate(obj);
+        }
+    }
+
+    #endif
+
+    public void reLayout() {
         if (NumCol <= 0) return;
         
 		Vector2 size = new Vector2((NumCol - 1) * SpaceX, (NumActiveChildren / NumCol - 1) * SpaceY);
