@@ -327,7 +327,7 @@ public class Game : MonoSingleton<Game> {
 
         for (int i = 0; i < _DeckFinals.Count; i++) {
             if (i < types.Length) {
-                _DeckFinals[i]._CardType = types[i];
+                _DeckFinals[i].CardType = types[i];
             }
         }
 	}
