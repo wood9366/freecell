@@ -117,6 +117,7 @@ public class Card : CustomMonoBehavior {
     public CardData.ECardTypeColor CardTypeColor { get { return _card.TypeColor; } }
     public CardData.ECardType CardType { get { return _card.Type; } }
     public int CardVal { get { return _card.Val; } }
+    public int CardId { get { return _card.Id; } }
 
     Deck _deck = null;
 	CardData _card = null;

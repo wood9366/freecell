@@ -58,8 +58,21 @@ public class CardData {
 	CardData(ECardType type, int val) {
 		_type = type;
 		_val = val;
+
+        int offset = 0;
+
+		if (type == ECardType.HEART) {
+            offset = 13;
+		} else if (type == ECardType.CLUB) {
+            offset = 26;
+		} else if (type == ECardType.DIAMOND) {
+            offset = 39;
+		}
+
+        _id = offset + val;
 	}
 
+    public int Id { get { return _id; } }
 	public ECardType Type { get { return _type; } }
 	public int Val { get { return _val; } }
 
@@ -79,4 +92,5 @@ public class CardData {
 
 	ECardType _type = ECardType.SPADE;
 	int _val = 0;
+    int _id = 0;
 }

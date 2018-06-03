@@ -8,43 +8,29 @@ public class MainMenu : MonoBehaviour {
     public Button _ButtonStart;
 
 	void Start () {
-        playState("in");
         _ButtonStart.onClick.AddListener(onClickStart);
+
+        Anim.OnAnimationEnd += onAnimEnd;
+        Anim.play("in");
 	}
 
     void onClickStart() {
         if (!_isStart) return;
 
-        playState("out");
+        Anim.play("out");
     }
 
-    void Update() {
-        var state = Anim.GetCurrentAnimatorStateInfo(0);
-
-        if (isStateEnd(state, "in")) {
+    void onAnimEnd(string name) {
+        if (name == "in") {
             _isStart = true;
-        } else if (isStateEnd(state, "out")) {
+        } else if (name == "out") {
             SceneManager.LoadScene("game");
         }
     }
 
-    void playState(string name) {
-        Anim.Play(name);
-    }
-
-    bool isStateEnd(string name) {
-        var state = Anim.GetCurrentAnimatorStateInfo(0);
-
-        return isStateEnd(state, name);
-    }
-
-    bool isStateEnd(AnimatorStateInfo state, string name) {
-        return state.IsName(name) && state.normalizedTime >= 1;
-    }
-
-    Animator Anim {
+    AnimatorHelper Anim {
         get {
-            return GetComponent<Animator>();
+            return AnimatorHelper.Get(gameObject);
         }
     }
 
