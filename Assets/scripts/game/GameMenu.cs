@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameMenu : MonoBehaviour {
-    public Button _ButtonRestart;
-    public Button _ButtonMainMenu;
+    public UIButton _ButtonNewRound;
+    public UIButton _ButtonRestart;
     public UIToggle _ToggleAuto;
 
     public float _MenuSlideAnimTime = 0.2f;
@@ -14,8 +14,6 @@ public class GameMenu : MonoBehaviour {
     public iTween.EaseType _MenuSlideOutAnimEaseType = iTween.EaseType.easeOutExpo;
 
 	void Start () {
-        _ButtonRestart.onClick.AddListener(onClickRestart);
-        _ButtonMainMenu.onClick.AddListener(onClickMainMenu);
         _ToggleAuto.OnToggle += onToggleAuto;
 	}
 
@@ -64,14 +62,21 @@ public class GameMenu : MonoBehaviour {
         _isDisplay = false;
     }
 
-    void onClickRestart() {
+    public void onClickNewRound() {
+        if (!_isDisplay) return;
+
+        Game.Instance.newRound();
+        hide();
+    }
+
+    public void onClickRestart() {
         if (!_isDisplay) return;
 
         Game.Instance.restart();
         hide();
     }
 
-    void onClickMainMenu() {
+    public void onClickMainMenu() {
         if (!_isDisplay) return;
 
         SceneManager.LoadScene("menu");

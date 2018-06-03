@@ -7,7 +7,6 @@ public class Game : MonoSingleton<Game> {
 	public List<Deck> _DeckSwitches = new List<Deck>(4);
 	public List<DeckFinal> _DeckFinals = new List<DeckFinal>(4);
 	public List<DeckCard> _DeckCards = new List<DeckCard>(8);
-    public GameObject _BtnShuffle;
     public GameMenu _GameMenu;
     public GameTopMenu _GameTopMenu;
     public GameBottomMenu _GameBottomMenu;
@@ -61,8 +60,6 @@ public class Game : MonoSingleton<Game> {
 
         EventSystem2D.Instance.init();
 
-        EventListener2D.Get(_BtnShuffle).OnClick = onClickBtnShuffle;
-
         MoveCardMgr.Instance.OnCommandCursorChange += onCommandCursorChange;
 
         changeStatus(EStatus.READY);
@@ -81,7 +78,7 @@ public class Game : MonoSingleton<Game> {
 
     bool _isRestart = false;
 
-    void onClickBtnShuffle() {
+    public void newRound() {
         if (Status == EStatus.GAME) {
             changeStatus(EStatus.DROP);
         } else {
@@ -114,6 +111,8 @@ public class Game : MonoSingleton<Game> {
         if (_nextStatus != _status) {
             _status = _nextStatus;
 
+            _GameMenu._ButtonRestart.Enabled = _status == EStatus.GAME;
+
             if (_status == EStatus.READY) {
                 enterStatusReady();
             } else if (_status == EStatus.PREPARE) {
@@ -138,6 +137,8 @@ public class Game : MonoSingleton<Game> {
         reset();
         enableBtnShuffle();
         _GameBottomMenu._ButtonUndo.Enabled = MoveCardMgr.Instance.CanUndo;
+
+        newRound();
     }
 
     void enterStatusPrepare() {
@@ -180,11 +181,11 @@ public class Game : MonoSingleton<Game> {
     float _statusTime = 0;
 
     void enableBtnShuffle() {
-        _BtnShuffle.GetComponent<Collider2D>().enabled = true;
+        _GameMenu._ButtonNewRound.Enabled = true;
     }
 
     void disableBtnShuffle() {
-        _BtnShuffle.GetComponent<Collider2D>().enabled = false;
+        _GameMenu._ButtonNewRound.Enabled = false;
     }
 
     void gamePrepare() {
@@ -213,43 +214,42 @@ public class Game : MonoSingleton<Game> {
     }
 
     void createCards() {
-        if (_isRestart) {
-            foreach (var id in _startCards) {
-                createCard(id);
-            }
-        } else {
-            // generate card deckes by card id
-            // 0 ~ 12, spade
-            // 13 ~ 25, heard
-            // 26 ~ 38, club
-            // 39 ~ 51, diamond
-            int num = 52;
-
-            for (int i = 0; i < num; i++) {
-                createCard(i);
-            }
-
+        if (!_isRestart) {
             shuffleCards();
+        }
 
-            _startCards.Clear();
+        foreach (var id in _startCards) {
+            createCard(id);
+        }
+    }
 
-            foreach (var card in _cards) {
-                _startCards.Add(card.CardId);
-            }
+    void shuffleCards() {
+        List<int> cards = new List<int>();
+
+        // generate card deckes by card id
+        // 0 ~ 12, spade
+        // 13 ~ 25, heard
+        // 26 ~ 38, club
+        // 39 ~ 51, diamond
+        int num = 52;
+
+        for (int i = 0; i < num; i++) {
+            cards.Add(i);
+        }
+
+        _startCards.Clear();
+
+        while (num > 0) {
+            var idx = Random.Range(0, num);
+
+            _startCards.Add(cards[idx]);
+            cards[idx] = cards[num - 1];
+
+            num--;
         }
     }
 
     List<int> _startCards = new List<int>();
-
-    void shuffleCards() {
-		for (int i = 0; i < 50; i++) {
-			int idx = Random.Range(0, _cards.Count);
-
-			var temp = _cards[idx];
-			_cards[idx] = _cards[_cards.Count - 1];
-			_cards[_cards.Count - 1] = temp;
-		}
-    }
 
     void dealCardToCardDeckes() {
         int[] numCardDecks = new int[8] { 6, 7, 6, 7, 6, 7, 6, 7 };
