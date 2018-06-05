@@ -28,6 +28,7 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
         if (card != null && card.IsTopCard) {
             prepareForAutoMoveCardToFinalDeck();
             tryMoveDeckCardToFinalDeck(card.DeckOn);
+            finalizeAutoMoveCardToFinalDeck();
         }
     }
 
@@ -110,6 +111,8 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
                 isDeckChange = tryMoveDeckCardToFinalDeck(deck) || isDeckChange;
             }
         }
+
+        finalizeAutoMoveCardToFinalDeck();
     }
 
     bool tryMoveDeckCardToFinalDeck(Deck deck) {
@@ -122,16 +125,16 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
         if (finalDeck != null) {
             var card = deck.TopCard;
 
-            Vector3 from = card.transform.position;
+            FlyToFinalCard data;
+
+            data.card = card;
+            data.from = card.transform.position;
 
             MoveCardMgr.Instance.move(new MoveCardCommand(card, finalDeck));
 
-            card.fly(from, card.transform.position, () => _numAutoMoveFlyCard--,
-                     _autoMoveCardFlyDelay, _autoMoveCardFlyZ, true, 0, iTween.EaseType.easeOutExpo);
+            data.to = card.transform.position;
 
-            _numAutoMoveFlyCard++;
-            _autoMoveCardFlyDelay += 0.1f;
-            _autoMoveCardFlyZ += -0.1f;
+            _flyToFinalCards.Add(data);
 
             return true;
         }
@@ -140,15 +143,37 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
     }
 
     void prepareForAutoMoveCardToFinalDeck() {
-        _autoMoveCardFlyDelay = 0;
-        _autoMoveCardFlyZ = 0;
         _numAutoMoveFlyCard = 0;
+        _flyToFinalCards.Clear();
     }
+
+    void finalizeAutoMoveCardToFinalDeck() {
+        float autoMoveCardFlyDelay = 0;
+        float autoMoveCardFlyZ = 0;
+
+        foreach (var card in _flyToFinalCards) {
+            card.card.fly(card.from, card.to, () => _numAutoMoveFlyCard--,
+                          autoMoveCardFlyDelay, autoMoveCardFlyZ, true, 0,
+                          iTween.EaseType.easeOutExpo);
+
+            _numAutoMoveFlyCard++;
+            autoMoveCardFlyDelay += 0.1f;
+            autoMoveCardFlyZ += -0.1f;
+        }
+
+        _flyToFinalCards.Clear();
+    }
+
+    struct FlyToFinalCard {
+        public Card card;
+        public Vector3 from;
+        public Vector3 to;
+    }
+
+    List<FlyToFinalCard> _flyToFinalCards = new List<FlyToFinalCard>();
 
     bool IsAutoMoveCardToFinal { get { return _numAutoMoveFlyCard > 0; } }
 
-    float _autoMoveCardFlyDelay = 0;
-    float _autoMoveCardFlyZ = 0;
     int _numAutoMoveFlyCard = 0;
 
     bool tryPutCardOnDragOnDeck(Vector3 pos) {
