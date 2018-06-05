@@ -24,13 +24,29 @@ public class MoveCardCommand : ICommand {
     }
 
     public void undo() {
-        Vector3 from = _moveCard.transform.position;
+        List<FlyCard> flyCards = new List<FlyCard>();
+
+        _moveCard.foreachCardUp(card => {
+            FlyCard flyCard;
+
+            flyCard.card = card;
+            flyCard.from = card.transform.position;
+
+            flyCards.Add(flyCard);
+        });
 
         _deckTo.getOffCard(_moveCard);
         _deckFrom.putOnCard(_moveCard);
 
-        _moveCard.fly(from, _moveCard.transform.position, null, 0, 0, false, 10,
-                      iTween.EaseType.easeOutExpo);
+        foreach (var flyCard in flyCards) {
+            flyCard.card.fly(flyCard.from, flyCard.card.transform.position, null, 0, 0, false, 10,
+                             iTween.EaseType.easeOutExpo);
+        }
+    }
+
+    struct FlyCard {
+        public Card card;
+        public Vector3 from;
     }
 
     bool _isRedo = false;
