@@ -77,12 +77,14 @@ public class Deck : CustomMonoBehavior {
             card.getOffCard();
             card.foreachCardUp(x => x.DeckOn = null);
 
-            int num = NumCard;
-            
-            card.foreachCardDown(x => {
-                x.transform.localPosition =
-                    Config.Instance.CardStackInitial + CardStackOffset * --num;
-            }, false);
+            if (TopCard != null) {
+                int num = NumCard;
+
+                TopCard.foreachCardDown(x => {
+                    x.transform.localPosition =
+                        Config.Instance.CardStackInitial + CardStackOffset * --num;
+                });
+            }
         }
     }
 
