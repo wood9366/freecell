@@ -50,4 +50,8 @@ public class DeckFinal : Deck {
 
         return false;
     }
+
+    public override Vector3 CardStackOffset { get { return _cardStackOffset; } }
+
+    Vector3 _cardStackOffset = new Vector3(0, 0, -0.1f);
 }
