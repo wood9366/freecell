@@ -14,7 +14,13 @@ public class GameTopMenu : MonoBehaviour {
         TextTime.gameObject.SetActive(time >= 0);
 
         if (time >= 0) {
-            TextTime.text = string.Format("{0}", new TimeSpan((long)(time * 10000000)));
+            int second = time % 60;
+            int minute = time / 60;
+            int hour = minute / 60;
+
+            minute %= 60;
+
+            TextTime.text = string.Format("{0:D2}:{1:D2}:{2:D2}", hour, minute, second);
         }
     }
 }
