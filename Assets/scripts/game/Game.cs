@@ -109,6 +109,10 @@ public class Game : MonoSingleton<Game> {
 
     void checkStatusChange() {
         if (_nextStatus != _status) {
+            if (_status == EStatus.GAME) {
+                exitStatusGame();
+            }
+
             _status = _nextStatus;
 
             _GameMenu._ButtonRestart.Enabled = _status == EStatus.GAME;
@@ -156,7 +160,20 @@ public class Game : MonoSingleton<Game> {
         _isRestart = false;
         enableBtnShuffle();
         DeckDrag.Instance.autoMoveCardAndSwitchDeckCardToFinalDeck();
+
+        _roundTimer = Timer.Instance.setInterval(1.0f, () => _GameTopMenu.setTime(++_roundTime));
+
+        _roundTime = 0;
+        _GameTopMenu.setTime(_roundTime);
     }
+
+    void exitStatusGame() {
+        Timer.Instance.clearTimeOut(_roundTimer);
+        _GameTopMenu.setTime(-1);
+    }
+
+    int _roundTimer = 0;
+    int _roundTime = 0;
 
     void enterStatusDrop() {
         if (_cards.Count > 0) {
@@ -189,6 +206,7 @@ public class Game : MonoSingleton<Game> {
     }
 
     void gamePrepare() {
+        _GameTopMenu.setTime(-1);
         createCards();
     }
 

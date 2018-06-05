@@ -143,7 +143,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1835551863}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6762479
 MonoBehaviour:
@@ -156,7 +156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca2c6cc90e854a3894528cbfd806e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 625
 --- !u!114 &6762480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca2c6cc90e854a3894528cbfd806e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 625
 --- !u!1 &37975163
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +356,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1835551863}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &93461150
 MonoBehaviour:
@@ -371,7 +369,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca2c6cc90e854a3894528cbfd806e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 625
 --- !u!114 &93461151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -959,7 +956,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd1d97ab20124ceabd27313fdc93cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 600
   _CardType: 0
   _Icon: {fileID: 1299757109}
 --- !u!114 &290489917
@@ -1150,7 +1146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd1d97ab20124ceabd27313fdc93cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 600
   _CardType: 3
   _Icon: {fileID: 1681436335}
 --- !u!114 &341286527
@@ -1885,7 +1880,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd1d97ab20124ceabd27313fdc93cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 600
   _CardType: 2
   _Icon: {fileID: 122426266}
 --- !u!114 &598731624
@@ -2314,7 +2308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd1d97ab20124ceabd27313fdc93cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 600
   _CardType: 1
   _Icon: {fileID: 37975165}
 --- !u!114 &709865012
@@ -2835,7 +2828,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1835551863}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &832118117
 MonoBehaviour:
@@ -2848,7 +2841,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca2c6cc90e854a3894528cbfd806e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 625
 --- !u!114 &832118118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3547,7 +3539,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecd80eb58e1047539d6f1fcb59999a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 600
 --- !u!114 &1168375429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3711,7 +3702,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f6a62de30f74b2ca1300205cd22805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextTime: {fileID: 1362516529}
+  TextTimeLabel: {fileID: 1362516529}
+  TextTime: {fileID: 987171094}
   SignAuto: {fileID: 814081346}
 --- !u!1 &1230603576
 GameObject:
@@ -3756,7 +3748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca2c6cc90e854a3894528cbfd806e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 625
 --- !u!114 &1230603579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3927,7 +3918,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecd80eb58e1047539d6f1fcb59999a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 600
 --- !u!1 &1349274914
 GameObject:
   m_ObjectHideFlags: 0
@@ -3970,6 +3960,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _CardStackInitial: {x: 0, y: 0, z: -0.1}
   _CardStackOffset: {x: 0, y: -75, z: -0.1}
+  _CardStackMaxHeight: 625
   _CardFlySpeed: 3
   _DealCardInterval: 0.1
 --- !u!1 &1362516527
@@ -4164,7 +4155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecd80eb58e1047539d6f1fcb59999a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 600
 --- !u!114 &1400829758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4276,7 +4266,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1835551863}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1412839422
 MonoBehaviour:
@@ -4289,7 +4279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca2c6cc90e854a3894528cbfd806e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 625
 --- !u!114 &1412839423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4489,7 +4478,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecd80eb58e1047539d6f1fcb59999a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 600
 --- !u!114 &1413778296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4864,7 +4852,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1835551863}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1688121401
 MonoBehaviour:
@@ -4877,7 +4865,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca2c6cc90e854a3894528cbfd806e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 625
 --- !u!114 &1688121402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5323,7 +5310,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1835551863}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1830249974
 MonoBehaviour:
@@ -5336,7 +5323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca2c6cc90e854a3894528cbfd806e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 625
 --- !u!114 &1830249975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5444,7 +5430,6 @@ Transform:
   m_LocalPosition: {x: 0, y: -409, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1439480622}
   - {fileID: 1412839421}
   - {fileID: 1830249973}
   - {fileID: 2082045257}
@@ -5452,6 +5437,7 @@ Transform:
   - {fileID: 6762478}
   - {fileID: 1688121400}
   - {fileID: 832118116}
+  - {fileID: 1439480622}
   - {fileID: 1230603577}
   m_Father: {fileID: 1757132071}
   m_RootOrder: 2
@@ -5490,7 +5476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd1d97ab20124ceabd27313fdc93cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 600
   _CardType: 0
   _Icon: {fileID: 1070172011}
 --- !u!1 &1882687560
@@ -5806,7 +5791,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecd80eb58e1047539d6f1fcb59999a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 600
 --- !u!114 &1981892424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6014,7 +5998,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1835551863}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2082045258
 MonoBehaviour:
@@ -6027,7 +6011,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca2c6cc90e854a3894528cbfd806e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHeight: 625
 --- !u!114 &2082045259
 MonoBehaviour:
   m_ObjectHideFlags: 0
