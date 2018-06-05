@@ -30,26 +30,38 @@ public class Deck : CustomMonoBehavior {
     }
 
     public Card TopCard { get { return _topCard; } }
+    public Card BottomCard { get { return _bottomCard; } }
     public int NumCard { get { return _numCard; } }
 
     public void putOnCard(Card card) {
         if (TopCard != null) {
             TopCard.putOnCard(card);
+        } else {
+            _bottomCard = card;
         }
 
-        int n = 0;
+        int num = NumCard;
 
-        card.foreachCardUp(x => {
-            x.DeckOn = this;
+        changeTopCard(card.TopCard);
 
-            x.transform.SetParent(transform, false);
-            x.transform.localScale = Vector3.one;
-            x.transform.localRotation = Quaternion.identity;
+        {
+            int n = 0;
+
+            card.foreachCardUp(x => {
+                x.DeckOn = this;
+
+                x.transform.SetParent(transform, false);
+                x.transform.localScale = Vector3.one;
+                x.transform.localRotation = Quaternion.identity;
+                x.transform.localPosition =
+                    Config.Instance.CardStackInitial + CardStackOffset * (num + n++);
+            });
+        }
+
+        card.foreachCardDown(x => {
             x.transform.localPosition =
-                Config.Instance.CardStackInitial + CardStackOffset * (NumCard + n++);
-
-            if (x.UpCard == null) changeTopCard(x);
-        });
+                Config.Instance.CardStackInitial + CardStackOffset * --num;
+        }, false);
     }
 
     public virtual Vector3 CardStackOffset { get { return Vector3.zero; } }
@@ -58,8 +70,19 @@ public class Deck : CustomMonoBehavior {
         if (isCardExist(card)) {
             changeTopCard(card.DownCard);
 
+            if (card == BottomCard) {
+                _bottomCard = null;
+            }
+
             card.getOffCard();
             card.foreachCardUp(x => x.DeckOn = null);
+
+            int num = NumCard;
+            
+            card.foreachCardDown(x => {
+                x.transform.localPosition =
+                    Config.Instance.CardStackInitial + CardStackOffset * --num;
+            }, false);
         }
     }
 
@@ -94,5 +117,6 @@ public class Deck : CustomMonoBehavior {
     }
 
     Card _topCard = null;
+    Card _bottomCard = null;
     int _numCard = 0;
 }

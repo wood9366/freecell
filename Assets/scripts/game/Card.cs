@@ -137,9 +137,33 @@ public class Card : CustomMonoBehavior {
     public int NumCardDown {
         get {
             int num = 0;
-            foreachCardDown(x => num++);
+            foreachCardDown(x => num++, false);
 
             return num;
+        }
+    }
+
+    public Card TopCard {
+        get {
+            var cur = this;
+            
+            while (cur.UpCard != null) {
+                cur = cur.UpCard;
+            }
+
+            return cur;
+        }
+    }
+
+    public Card BottomCard {
+        get {
+            var cur = this;
+            
+            while (cur.DownCard != null) {
+                cur = cur.DownCard;
+            }
+
+            return cur;
         }
     }
 

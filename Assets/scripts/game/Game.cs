@@ -272,28 +272,33 @@ public class Game : MonoSingleton<Game> {
             }
         }
 
-        float delayFlyCard = 0.5f;
-        float zOffsetFlyCard = 0;
-        int numFlyCard = 0;
 		int idxCard = 0;
+        int numFlyCard = 0;
 
 		for (int i = 0; i < 8 && idxCard < _cards.Count; i++) {
 			int numCard = numCardDecks[i];
 
 			while (numCard-- > 0 && idxCard < _cards.Count) {
-                Card card = _cards[idxCard++];
-
-                _DeckCards[i].putOnCard(card);
-
-                card.fly(_SendDeck.transform.position, card.transform.position,
-                        () => { if (--numFlyCard == 0) changeStatus(EStatus.GAME); },
-                         delayFlyCard, zOffsetFlyCard, true, 0, iTween.EaseType.easeOutExpo);
-
+                _DeckCards[i].putOnCard(_cards[idxCard++]);
                 numFlyCard++;
-                zOffsetFlyCard += -0.1f;
-                delayFlyCard += Config.Instance.DealCardInterval;
 			}
 		}
+
+        float delayFlyCard = 0.5f;
+        float zOffsetFlyCard = 0;
+
+        _DeckCards.ForEach(deck => {
+            if (deck.BottomCard != null) {
+                deck.BottomCard.foreachCardUp(card => {
+                    card.fly(_SendDeck.transform.position, card.transform.position,
+                            () => { if (--numFlyCard == 0) changeStatus(EStatus.GAME); },
+                            delayFlyCard, zOffsetFlyCard, true, 0, iTween.EaseType.easeOutExpo);
+
+                    zOffsetFlyCard += -0.1f;
+                    delayFlyCard += Config.Instance.DealCardInterval;
+                });
+            }
+        });
     }
 
     int[] _startNumCardDecks = new int[8];

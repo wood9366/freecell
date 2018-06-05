@@ -85,7 +85,7 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
         } else {
             Card.MoveCard(_draggingCard, _draggingCard.DeckOn.transform,
                           _draggingCard.DeckOn.CardStackOffset,
-                          _draggingCard.NumCardDown - 1);
+                          _draggingCard.NumCardDown);
         }
 
         _deckDragOn = null;

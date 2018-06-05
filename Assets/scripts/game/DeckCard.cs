@@ -53,5 +53,17 @@ public class DeckCard : Deck {
         return isPutOnRuleOK && isNumPutOnLinkedCardOK;
     }
 
-    public override Vector3 CardStackOffset { get { return Config.Instance.CardStackOffset; } }
+    public override Vector3 CardStackOffset {
+        get {
+            var offset = Config.Instance.CardStackOffset;
+
+            float offsetY = Config.Instance.CardStackMaxHeight / NumCard;
+
+            if (Mathf.Abs(offset.y) > offsetY) {
+                offset.y = -offsetY;
+            }
+
+            return offset;
+        }
+    }
 }
