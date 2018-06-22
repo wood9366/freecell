@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Game : MonoSingleton<Game> {
@@ -62,33 +61,19 @@ public class Game : MonoSingleton<Game> {
 
         MoveCardMgr.Instance.OnCommandCursorChange += onCommandCursorChange;
 
+        // init game state machine
+        _statuses.addState((int)EStatus.READY, new GameStateReady(this));
+        _statuses.addState((int)EStatus.PREPARE, new GameStatePrepare(this));
+        _statuses.addState((int)EStatus.DEAL, new GameStateDeal(this));
+        _statuses.addState((int)EStatus.GAME, new GameStatePlay(this));
+        _statuses.addState((int)EStatus.DROP, new GameStateDrop(this));
+
+        shuffleRoundCards();
         changeStatus(EStatus.READY);
     }
 
     void onCommandCursorChange() {
         _GameBottomMenu._ButtonUndo.Enabled = MoveCardMgr.Instance.CanUndo;
-    }
-
-    public void restart() {
-        if (Status == EStatus.GAME) {
-            _isRestart = true;
-            changeStatus(EStatus.DROP);
-        }
-    }
-
-    bool _isRestart = false;
-
-    public void newRound() {
-        if (Status == EStatus.GAME) {
-            changeStatus(EStatus.DROP);
-        } else {
-            shuffle();
-        }
-    }
-
-    void shuffle() {
-        reset();
-        changeStatus(EStatus.PREPARE);
     }
 
     protected override void release() {
@@ -98,119 +83,29 @@ public class Game : MonoSingleton<Game> {
 
     void Update() {
         InputMgr.Instance.update();
-        checkStatusChange();
     }
 
-    bool checkStatusEndByTime() {
-        _statusTime -= Time.deltaTime;
-
-        return _statusTime <= 0;
-    }
-
-    void checkStatusChange() {
-        if (_nextStatus != _status) {
-            if (_status == EStatus.GAME) {
-                exitStatusGame();
-            }
-
-            _status = _nextStatus;
-
-            _GameMenu._ButtonRestart.Enabled = _status == EStatus.GAME;
-
-            if (_status == EStatus.READY) {
-                enterStatusReady();
-            } else if (_status == EStatus.PREPARE) {
-                enterStatusPrepare();
-            } else if (_status == EStatus.DEAL) {
-                enterStatusDeal();
-            } else if (_status == EStatus.GAME) {
-                enterStatusGame();
-            } else if (_status == EStatus.DROP) {
-                enterStatusDrop();
-            }
+    public void restart() {
+        if (Status == EStatus.GAME) {
+            changeStatus(EStatus.DROP);
         }
     }
 
-    void changeStatus(EStatus status) {
-        if (status != _status) {
-            _nextStatus = status;
-        }
-    }
+    public void newRound() {
+        shuffleRoundCards();
 
-    void enterStatusReady() {
-        reset();
-        enableBtnShuffle();
-        _GameBottomMenu._ButtonUndo.Enabled = MoveCardMgr.Instance.CanUndo;
-
-        newRound();
-    }
-
-    void enterStatusPrepare() {
-        gamePrepare();
-        disableBtnShuffle();
-
-        changeStatus(EStatus.DEAL);
-    }
-
-    void enterStatusDeal() {
-        dealCardToCardDeckes();
-    }
-
-    void enterStatusGame() {
-        _isRestart = false;
-        enableBtnShuffle();
-        DeckDrag.Instance.autoMoveCardAndSwitchDeckCardToFinalDeck();
-
-        _roundTimer = Timer.Instance.setInterval(1.0f, () => _GameTopMenu.setTime(++_roundTime));
-
-        _roundTime = 0;
-        _GameTopMenu.setTime(_roundTime);
-    }
-
-    void exitStatusGame() {
-        Timer.Instance.clearTimeOut(_roundTimer);
-        _GameTopMenu.setTime(-1);
-    }
-
-    int _roundTimer = 0;
-    int _roundTime = 0;
-
-    void enterStatusDrop() {
-        if (_cards.Count > 0) {
-            int numShuffleCardFly = 0;
-
-            foreach (var card in _cards) {
-                card.fly(card.transform.position, _SendDeck.transform.position,
-                         () => { if (--numShuffleCardFly == 0) shuffle(); },
-                         Random.Range(0, 0.2f), 0, false, 20, iTween.EaseType.linear);
-
-                numShuffleCardFly++;
-            }
+        if (Status == EStatus.GAME) {
+            changeStatus(EStatus.DROP);
         } else {
-            shuffle();
+            changeStatus(EStatus.READY);
         }
     }
 
-    public EStatus Status { get { return _status; } }
-
-    EStatus _status = EStatus.NONE;
-    EStatus _nextStatus = EStatus.NONE;
-    float _statusTime = 0;
-
-    void enableBtnShuffle() {
-        _GameMenu._ButtonNewRound.Enabled = true;
+    public void changeStatus(EStatus status) {
+        _statuses.setState((int)status);
     }
 
-    void disableBtnShuffle() {
-        _GameMenu._ButtonNewRound.Enabled = false;
-    }
-
-    void gamePrepare() {
-        _GameTopMenu.setTime(-1);
-        createCards();
-    }
-
-    void reset() {
+    public void resetRound() {
         foreach (var card in _cards) {
             GameObject.DestroyImmediate(card.gameObject);
         }
@@ -231,95 +126,18 @@ public class Game : MonoSingleton<Game> {
         MoveCardMgr.Instance.reset();
     }
 
-    void createCards() {
-        if (!_isRestart) {
-            shuffleCards();
-        }
-
-        foreach (var id in _startCards) {
-            createCard(id);
-        }
-    }
-
-    void shuffleCards() {
-        List<int> cards = new List<int>();
-
-        // generate card deckes by card id
-        // 0 ~ 12, spade
-        // 13 ~ 25, heard
-        // 26 ~ 38, club
-        // 39 ~ 51, diamond
-        int num = 52;
-
-        for (int i = 0; i < num; i++) {
-            cards.Add(i);
-        }
-
-        _startCards.Clear();
-
-        while (num > 0) {
-            var idx = Random.Range(0, num);
-
-            _startCards.Add(cards[idx]);
-            cards[idx] = cards[num - 1];
-
-            num--;
-        }
-    }
-
-    List<int> _startCards = new List<int>();
-
-    void dealCardToCardDeckes() {
-        int[] numCardDecks = new int[8] { 6, 7, 6, 7, 6, 7, 6, 7 };
-
-        if (_isRestart) {
-            for (int i = 0; i < _startNumCardDecks.Length; i++) {
-                numCardDecks[i] = _startNumCardDecks[i];
-            }
-        } else {
-            for (int i = 0; i < 4; i++) {
-                int idx = Random.Range(0, numCardDecks.Length);
-
-                var temp = numCardDecks[idx];
-                numCardDecks[idx] = numCardDecks[numCardDecks.Length - 1];
-                numCardDecks[numCardDecks.Length - 1] = temp;
-            }
-
-            for (int i = 0; i < numCardDecks.Length; i++) {
-                _startNumCardDecks[i] = numCardDecks[i];
-            }
-        }
-
-		int idxCard = 0;
-        int numFlyCard = 0;
-
-		for (int i = 0; i < 8 && idxCard < _cards.Count; i++) {
-			int numCard = numCardDecks[i];
-
-			while (numCard-- > 0 && idxCard < _cards.Count) {
-                _DeckCards[i].putOnCard(_cards[idxCard++]);
-                numFlyCard++;
-			}
-		}
-
-        float delayFlyCard = 0.5f;
-        float zOffsetFlyCard = 0;
-
-        _DeckCards.ForEach(deck => {
-            if (deck.BottomCard != null) {
-                deck.BottomCard.foreachCardUp(card => {
-                    card.fly(_SendDeck.transform.position, card.transform.position,
-                            () => { if (--numFlyCard == 0) changeStatus(EStatus.GAME); },
-                            delayFlyCard, zOffsetFlyCard, true, 0, iTween.EaseType.easeOutExpo);
-
-                    zOffsetFlyCard += -0.1f;
-                    delayFlyCard += Config.Instance.DealCardInterval;
-                });
-            }
+    // create cards game object and put on round deckes
+    public void prepareRoundCards() {
+        _roundCards.each((deckIdx, deckCardIdx, cardIdx, cardId) => {
+            _DeckCards[deckIdx].putOnCard(createCard(cardId));
         });
     }
 
-    int[] _startNumCardDecks = new int[8];
+    void shuffleRoundCards() {
+        _roundCards.shuffle();
+    }
+
+    RoundCards _roundCards = new RoundCards();
 
     Card createCard(int id) {
         var card = GameObject.Instantiate(ResourceMgr.Instance.getCardPrefab(),
@@ -332,7 +150,13 @@ public class Game : MonoSingleton<Game> {
 		return card;
 	}
 
+    public List<Card> Cards { get { return _cards; } }
+
     List<Card> _cards = new List<Card>();
+
+    public EStatus Status { get { return (EStatus)_statuses.CurrentStateId; } }
+
+    StateMachine _statuses = new StateMachine();
 
 #if UNITY_EDITOR
 	[ContextMenu("Auto Set Deck")]

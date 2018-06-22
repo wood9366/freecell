@@ -9,7 +9,12 @@ public class GameTopMenu : MonoBehaviour {
     public Text TextTime;
     public UISign SignAuto;
 
-    public void setTime(int time) {
+    public void hideRoundTime() {
+        TextTimeLabel.gameObject.SetActive(false);
+        TextTime.gameObject.SetActive(false);
+    }
+
+    public void setRoundTime(int time) {
         TextTimeLabel.gameObject.SetActive(time >= 0);
         TextTime.gameObject.SetActive(time >= 0);
 
