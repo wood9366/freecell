@@ -86,18 +86,19 @@ public class Game : MonoSingleton<Game> {
     }
 
     public void restart() {
+        DebugUtility.Assert(Status == EStatus.GAME);
+
         if (Status == EStatus.GAME) {
             changeStatus(EStatus.DROP);
         }
     }
 
     public void newRound() {
-        shuffleRoundCards();
+        DebugUtility.Assert(Status == EStatus.GAME);
 
         if (Status == EStatus.GAME) {
+            shuffleRoundCards();
             changeStatus(EStatus.DROP);
-        } else {
-            changeStatus(EStatus.READY);
         }
     }
 
