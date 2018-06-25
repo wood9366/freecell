@@ -128,7 +128,7 @@ public class Game : MonoSingleton<Game> {
 
     // create cards game object and put on round deckes
     public void prepareRoundCards() {
-        _roundCards.each((deckIdx, deckCardIdx, cardIdx, cardId) => {
+        _roundCards.forEach((deckIdx, deckCardIdx, cardIdx, cardId) => {
             _DeckCards[deckIdx].putOnCard(createCard(cardId));
         });
     }

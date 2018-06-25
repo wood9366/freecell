@@ -15,7 +15,7 @@ public class RoundCards {
         }
     }
 
-    public void each(System.Action<int, int, int, int> fn) {
+    public void forEach(System.Action<int, int, int, int> fn) {
         if (fn == null) return;
 
         int idx = 0;
