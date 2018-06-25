@@ -8,6 +8,14 @@ public class GameStateDeal : State {
     }
 
     public override void enter() {
+        _game.resetRound();
+        _game.prepareRoundCards();
+
+        _game._GameTopMenu.setRoundTime(0);
+        _game._GameBottomMenu._ButtonUndo.Enabled = MoveCardMgr.Instance.CanUndo;
+        _game._GameMenu._ButtonNewRound.Enabled = false;
+        _game._GameMenu._ButtonRestart.Enabled = false;
+
         dealCards();
     }
 

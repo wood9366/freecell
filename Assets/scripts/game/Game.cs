@@ -12,7 +12,6 @@ public class Game : MonoSingleton<Game> {
 
     public enum EStatus {
         NONE = 0,
-        READY,
         PREPARE,
         DEAL,
         GAME,
@@ -62,14 +61,13 @@ public class Game : MonoSingleton<Game> {
         MoveCardMgr.Instance.OnCommandCursorChange += onCommandCursorChange;
 
         // init game state machine
-        _statuses.addState((int)EStatus.READY, new GameStateReady(this));
         _statuses.addState((int)EStatus.PREPARE, new GameStatePrepare(this));
         _statuses.addState((int)EStatus.DEAL, new GameStateDeal(this));
         _statuses.addState((int)EStatus.GAME, new GameStatePlay(this));
         _statuses.addState((int)EStatus.DROP, new GameStateDrop(this));
 
         shuffleRoundCards();
-        changeStatus(EStatus.READY);
+        changeStatus(EStatus.PREPARE);
     }
 
     void onCommandCursorChange() {

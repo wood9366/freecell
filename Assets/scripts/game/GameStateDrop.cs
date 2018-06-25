@@ -33,7 +33,7 @@ public class GameStateDrop : State {
     }
 
     void dropEnd() {
-        _game.changeStatus(Game.EStatus.READY);
+        _game.changeStatus(Game.EStatus.DEAL);
     }
 
     int _numShuffleCardFly = 0;
