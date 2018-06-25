@@ -12,9 +12,43 @@ public class GameStatePrepare : State {
     }
 
     void showRoundStartAnimation() {
-        // todo, edit round start animation
+        System.Action<GameObject> fnHide = (go) => {
+            foreach(var sp in go.GetComponentsInChildren<SpriteRenderer>()) {
+                var c = sp.color;
+                c.a = 0;
+                sp.color =  c;
+            }
 
-        onRoundStartAnimationEnd();
+            foreach(var m in go.GetComponentsInChildren<TextMesh>()) {
+                var c = m.color;
+                c.a = 0;
+                m.color =  c;
+            }
+        };
+
+        _game._DeckFinals.ForEach(deck => fnHide(deck.gameObject));
+        _game._DeckSwitches.ForEach(deck => fnHide(deck.gameObject));
+        _game._DeckCards.ForEach(deck => fnHide(deck.gameObject));
+
+        _game._GameTopMenu.show(() => {
+            int n = _game._DeckFinals.Count +
+                _game._DeckSwitches.Count +
+                _game._DeckCards.Count;
+
+            System.Action fnCheckEnd = () => {
+                n--;
+
+                if (n <= 0) {
+                    onRoundStartAnimationEnd();
+                }
+            };
+
+            _game._DeckFinals.ForEach(deck => deck.show(fnCheckEnd));
+            _game._DeckSwitches.ForEach(deck => deck.show(fnCheckEnd));
+            _game._DeckCards.ForEach(deck => deck.show(fnCheckEnd));
+        });
+
+        _game._GameBottomMenu.show();
     }
 
     void onRoundStartAnimationEnd() {
