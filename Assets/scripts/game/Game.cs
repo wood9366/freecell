@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Game : MonoSingleton<Game> {
     public GameObject _SendDeck = null;
-	public List<Deck> _DeckSwitches = new List<Deck>(4);
-	public List<DeckFinal> _DeckFinals = new List<DeckFinal>(4);
-	public List<DeckCard> _DeckCards = new List<DeckCard>(8);
+    public List<Deck> _DeckSwitches = new List<Deck>(4);
+    public List<DeckFinal> _DeckFinals = new List<DeckFinal>(4);
+    public List<DeckCard> _DeckCards = new List<DeckCard>(8);
     public GameMenu _GameMenu;
     public GameTopMenu _GameTopMenu;
     public GameBottomMenu _GameBottomMenu;
@@ -112,17 +112,17 @@ public class Game : MonoSingleton<Game> {
         }
         _cards.Clear();
 
-		foreach (var deck in _DeckSwitches) {
-			deck.empty();
-		}
+        foreach (var deck in _DeckSwitches) {
+            deck.empty();
+        }
 
-		foreach (var deck in _DeckFinals) {
-			deck.empty();
-		}
+        foreach (var deck in _DeckFinals) {
+            deck.empty();
+        }
 
-		foreach (var deck in _DeckCards) {
-			deck.empty();
-		}
+        foreach (var deck in _DeckCards) {
+            deck.empty();
+        }
 
         MoveCardMgr.Instance.reset();
     }
@@ -148,8 +148,8 @@ public class Game : MonoSingleton<Game> {
 
         _cards.Add(card);
 
-		return card;
-	}
+        return card;
+    }
 
     public List<Card> Cards { get { return _cards; } }
 
@@ -160,11 +160,11 @@ public class Game : MonoSingleton<Game> {
     StateMachine _statuses = new StateMachine();
 
 #if UNITY_EDITOR
-	[ContextMenu("Auto Set Deck")]
-	void autoSetDeck() {
-		setDeck<Deck>("2d/Desk/SwitchDecks", _DeckSwitches);
-		setDeck<DeckFinal>("2d/Desk/FinalDecks", _DeckFinals);
-		setDeck<DeckCard>("2d/Desk/CardDecks", _DeckCards);
+    [ContextMenu("Auto Set Deck")]
+    void autoSetDeck() {
+        setDeck<Deck>("2d/Desk/SwitchDecks", _DeckSwitches);
+        setDeck<DeckFinal>("2d/Desk/FinalDecks", _DeckFinals);
+        setDeck<DeckCard>("2d/Desk/CardDecks", _DeckCards);
 
         var types = new CardData.ECardType[] {
             CardData.ECardType.SPADE,
@@ -178,12 +178,12 @@ public class Game : MonoSingleton<Game> {
                 _DeckFinals[i].CardType = types[i];
             }
         }
-	}
+    }
 
-	void setDeck<T>(string path, List<T> _deckes) {
-		var obj = GameObject.Find(path);
+    void setDeck<T>(string path, List<T> _deckes) {
+        var obj = GameObject.Find(path);
 
-		if (obj != null) {
+        if (obj != null) {
             var grid = obj.GetComponent<LayoutGrid>();
 
             if (grid != null) {
@@ -191,14 +191,14 @@ public class Game : MonoSingleton<Game> {
                 grid.create();
             }
 
-			var deckes = obj.GetComponentsInChildren<T>();
+            var deckes = obj.GetComponentsInChildren<T>();
 
-			_deckes.Clear();
+            _deckes.Clear();
 
-			foreach (var deck in deckes) {
-				_deckes.Add(deck);
-			}
-		}
-	}
+            foreach (var deck in deckes) {
+                _deckes.Add(deck);
+            }
+        }
+    }
 #endif
 }
