@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Card : CustomMonoBehavior {
-	public SpriteRenderer _SpriteType;
-	public SpriteRenderer _SpriteVal;
-	public SpriteRenderer _SpriteSign;
+    public SpriteRenderer _SpriteType;
+    public SpriteRenderer _SpriteVal;
+    public SpriteRenderer _SpriteSign;
 
     static public bool IsLinkedCard(Card down, Card up) {
         bool isDifferentTypeColor = up.CardTypeColor != down.CardTypeColor;

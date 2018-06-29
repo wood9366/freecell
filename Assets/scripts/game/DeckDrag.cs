@@ -71,14 +71,14 @@ public class DeckDrag : MonoSingleton<DeckDrag> {
         }
     }
 
-	void dragBegin(Vector3 pos, Card card) {
+    void dragBegin(Vector3 pos, Card card) {
         _dragOffset = card.transform.position - pos;
         _draggingCard = card;
 
         Card.MoveCard(_draggingCard, transform, Config.Instance.CardStackOffset);
 
         updatePosition(pos);
-	}
+    }
 
     void dragEnd(Vector3 pos) {
         if (tryPutCardOnDragOnDeck(pos)) {
