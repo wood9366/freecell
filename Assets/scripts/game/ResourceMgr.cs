@@ -43,35 +43,30 @@ public class ResourceMgr : MonoSingleton<ResourceMgr> {
 
 #if UNITY_EDITOR
 	const string CARD_NO_SPRITE_SHEET_PATH = "Assets/texture/poker_no.png";
-	const string CARD_COLOR_SPRITE_SHEET_PATH = "Assets/texture/poker_color.png";
+	const string CARD_COLOR_SPRITE_SHEET_PATH = "Assets/texture/card_.png";
 
 	[ContextMenu("AutoSetCardResource")]
 	void autoSetCardResource() {
-		Sprite[] sprites = AssetDatabase.LoadAllAssetRepresentationsAtPath(CARD_NO_SPRITE_SHEET_PATH).OfType<Sprite>().ToArray();
+            Sprite[] sprites = AssetDatabase.LoadAllAssetRepresentationsAtPath(CARD_NO_SPRITE_SHEET_PATH).OfType<Sprite>().ToArray();
 
-		foreach (var sp in sprites) {
-			for (int i = 1; i <= 13; i++) {
-                if (sp.name == i.ToString()) {
-					_CardData._SpriteValues[i - 1] = sp;
-				}
-			}
-        }
-
-		string[] namesCardType = new string[4] {
-			"spade", "heart", "club", "diamond"
-		};
-
-		sprites = AssetDatabase.LoadAllAssetRepresentationsAtPath(CARD_COLOR_SPRITE_SHEET_PATH).OfType<Sprite>().ToArray();
-
-		foreach (var sp in sprites) {
-			for (int i = 0; i < 4; i++) {
-                if (sp.name == namesCardType[i]) {
-					_CardData._SpriteTypes[i] = sp;
-					continue;
+            foreach (var sp in sprites) {
+                for (int i = 1; i <= 13; i++) {
+                    if (sp.name == i.ToString()) {
+                        _CardData._SpriteValues[i - 1] = sp;
+                    }
                 }
-			}
-		}
-	}
-#endif
+            }
 
+            string[] namesCardType = new string[4] {
+                "spade", "heart", "club", "diamond"
+            };
+
+            for (int i = 0; i < 4; i++) {
+                var path = "Assets/texture/card_" + namesCardType[i] + ".png";
+                var sp = AssetDatabase.LoadAllAssetRepresentationsAtPath(path).OfType<Sprite>().ToArray();
+
+                _CardData._SpriteTypes[i] = sp[0];
+            }
+        }
+#endif
 }

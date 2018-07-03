@@ -25,16 +25,11 @@ public class DeckFinal : Deck {
                 "spade", "heart", "club", "diamond"
             };
 
-            var sprites = AssetDatabase.LoadAllAssetRepresentationsAtPath("Assets/texture/poker_color_outline.png").OfType<Sprite>().ToArray();
+            var name = "card_" + namesCardType[(int)_CardType] + "_outline.png";
 
-            _Icon.sprite = null;
+            var sprites = AssetDatabase.LoadAllAssetRepresentationsAtPath("Assets/texture/" + name).OfType<Sprite>().ToArray();
 
-            foreach (var sprite in sprites) {
-                if (namesCardType[(int)_CardType] == sprite.name) {
-                    _Icon.sprite = sprite;
-                    break;
-                }
-            }
+            _Icon.sprite = sprites[0];
         }
     }
     #endif

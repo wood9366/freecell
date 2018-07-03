@@ -1,13 +1,9 @@
 fileFormatVersion: 2
-guid: 0dc43f0450a804523aded9fd06ef3bed
-timeCreated: 1528040641
+guid: 365173d1f84394600b9ea1e757a1effa
+timeCreated: 1530631771
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: club
-    21300002: spade
-    21300004: diamond
-    21300006: heart
+  fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -44,7 +40,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 0
@@ -113,63 +109,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: club
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 3
-        width: 119
-        height: 126
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: spade
-      rect:
-        serializedVersion: 2
-        x: 119
-        y: 0
-        width: 112
-        height: 131
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: diamond
-      rect:
-        serializedVersion: 2
-        x: 233
-        y: 2
-        width: 103
-        height: 124
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: heart
-      rect:
-        serializedVersion: 2
-        x: 340
-        y: 3
-        width: 119
-        height: 125
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
     physicsShape: []
   spritePackingTag: 

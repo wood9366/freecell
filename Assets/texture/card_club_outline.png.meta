@@ -1,17 +1,9 @@
 fileFormatVersion: 2
-guid: 6d05913c5ebe146859091844ab0a226b
-timeCreated: 1526811422
+guid: b92ef650ad7594f9c918758bfaf21e15
+timeCreated: 1530631771
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: club
-    21300002: spade
-    21300004: diamond
-    21300006: heart
-    21300008: club
-    21300010: club
-    21300012: spade
-    21300014: diamond
+  fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -48,7 +40,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 0
@@ -117,63 +109,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: club
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 4
-        width: 113
-        height: 121
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: spade
-      rect:
-        serializedVersion: 2
-        x: 116
-        y: 1
-        width: 106
-        height: 126
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: diamond
-      rect:
-        serializedVersion: 2
-        x: 225
-        y: 3
-        width: 99
-        height: 120
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: heart
-      rect:
-        serializedVersion: 2
-        x: 325
-        y: 3
-        width: 114
-        height: 120
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
     physicsShape: []
   spritePackingTag: 
