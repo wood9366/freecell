@@ -2,6 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -9,15 +10,52 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="793.70081"
+   height="1122.5197"
+   viewBox="0 0 793.70081 1122.5197"
    version="1.1"
    id="svg8"
    sodipodi:docname="card.svg"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06">
   <defs
-     id="defs2" />
+     id="defs2">
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path845"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <linearGradient
+       id="linearGradient825"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#fffdfd;stop-opacity:1;"
+         offset="0"
+         id="stop823" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter1629"
+       x="-0.036197871"
+       width="1.0723957"
+       y="-0.035804283"
+       height="1.0716085">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.36669703"
+         id="feGaussianBlur1631" />
+    </filter>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -25,19 +63,23 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="333.91944"
-     inkscape:cy="806.64237"
-     inkscape:document-units="mm"
+     inkscape:zoom="1.9956125"
+     inkscape:cx="165.45994"
+     inkscape:cy="1029.9526"
+     inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:snap-global="false"
-     units="mm"
+     units="px"
      inkscape:window-width="1680"
      inkscape:window-height="1005"
-     inkscape:window-x="131"
-     inkscape:window-y="1083"
-     inkscape:window-maximized="0" />
+     inkscape:window-x="49"
+     inkscape:window-y="3"
+     inkscape:window-maximized="0"
+     scale-x="1.9"
+     inkscape:pagecheckerboard="true"
+     showguides="true"
+     inkscape:guide-bbox="true" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -55,37 +97,40 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="opacity:1;fill:none;fill-opacity:0;fill-rule:nonzero;stroke:#000000;stroke-width:2.11666667;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:4.23333333,2.11666667;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       style="opacity:1;fill:none;fill-opacity:0;fill-rule:nonzero;stroke:#fffdfd;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:7.99999999, 15.99999998;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
        id="rect815"
-       width="50.513935"
-       height="73.76638"
-       x="10.156243"
-       y="9.685256"
-       ry="7.4835482"
+       width="168"
+       height="230"
+       x="19.126511"
+       y="18.272131"
        inkscape:export-filename="/Users/liyang/project/freecell/Assets/texture/border_dot.png"
-       inkscape:export-xdpi="87.210167"
-       inkscape:export-ydpi="87.210167" />
+       inkscape:export-xdpi="95.999977"
+       inkscape:export-ydpi="95.999977"
+       ry="32.571457"
+       rx="32.571457" />
     <rect
-       ry="7.4835482"
-       y="9.685256"
-       x="70.826431"
-       height="73.76638"
-       width="50.513935"
+       ry="9.0609818"
+       y="281.18921"
+       x="17.213219"
+       height="24.580101"
+       width="24.312836"
        id="rect817"
-       style="opacity:1;fill:none;fill-opacity:0;fill-rule:nonzero;stroke:#000000;stroke-width:2.11666667;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       style="opacity:1;fill:none;fill-opacity:0;fill-rule:nonzero;stroke:#fffdfd;stroke-width:1.32291663;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal;filter:url(#filter1629)"
        inkscape:export-filename="/Users/liyang/project/freecell/Assets/texture/border.png"
        inkscape:export-xdpi="72"
-       inkscape:export-ydpi="72" />
+       inkscape:export-ydpi="72"
+       rx="9.0609818" />
     <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.11666667;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
-       id="rect838"
-       width="50.513935"
-       height="73.76638"
-       x="134.97112"
-       y="9.685256"
-       ry="7.4835482"
+       rx="32.571457"
+       ry="32.571457"
+       inkscape:export-ydpi="95.999977"
+       inkscape:export-xdpi="95.999977"
        inkscape:export-filename="/Users/liyang/project/freecell/Assets/texture/card_bg.png"
-       inkscape:export-xdpi="72"
-       inkscape:export-ydpi="72" />
+       y="58.012699"
+       x="217.56183"
+       height="72"
+       width="72"
+       id="rect1430"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
   </g>
 </svg>
